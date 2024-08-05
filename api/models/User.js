@@ -16,6 +16,8 @@ class User {
       username,
     ]);
 
+    console.log(query.rows);
+
     if (query.rows.length !== 1) {
       throw new Error("Unable to authenticate user");
     }
@@ -28,7 +30,7 @@ class User {
       throw new Error("Please provide required fields");
 
     const query = await db.query(
-      "INSERT INTO users (username , password , highscore , role) VALUES ($1 , $2 , 0 , 'user')",
+      "INSERT INTO users (username , password , highscore , role) VALUES ($1 , $2 , 0 , 'user') RETURNING *",
       [username, password]
     );
 
