@@ -1,12 +1,12 @@
-require("dotenv").config()
-const fs = require("fs")
+const fs = require('fs');
+const db = require('./connect');  // Adjust this path if necessary
 
-const db = require("../database/connect")
-const sql = fs.readFileSync("./api/database/sql").toString()
+const sql = fs.readFileSync(__dirname + '/setup.sql').toString();
 
 db.query(sql)
-.then(data => {
-    db.end()
-    console.log("Setup complete")
-})
-.catch(error => console.log(error))
+  .then(() => {
+    db.end();
+    console.log('Setup complete');
+  })
+  .catch(error => console.error('Error executing SQL:', error));
+
