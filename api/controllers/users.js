@@ -58,6 +58,7 @@ const signup = async (req, res) => {
       }
     );
   } catch (err) {
+    console.log(err);
     res.status(404).send({ error: err });
   }
 };

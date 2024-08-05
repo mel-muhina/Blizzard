@@ -12,7 +12,7 @@ class User {
   static async findByUsername(username) {
     if (!username) throw new Error("Please provide a username");
 
-    const query = await db.query("SELECT * FROM user WHERE username = $1", [
+    const query = await db.query("SELECT * FROM users WHERE username = $1", [
       username,
     ]);
 
@@ -28,7 +28,7 @@ class User {
       throw new Error("Please provide required fields");
 
     const query = await db.query(
-      "INSERT INTO user (username , password , highscore , role) VALUES ($1 , $2 , 0 , 'user')",
+      "INSERT INTO users (username , password , highscore , role) VALUES ($1 , $2 , 0 , 'user')",
       [username, password]
     );
 
