@@ -1,0 +1,64 @@
+/*  This currently has no affect on the game. */
+body {
+    background-color: black;
+}
+
+/* This is the outer most part of the game that contains all elements */
+.fullcontainer {
+    padding-top: 5%;
+    background-image: url("assets/background1.jpg");
+    background-color: black;
+    border-radius: 5px;
+    text-align: center;
+ 
+}
+
+/* This is purely the text part of the game */
+
+#textbox {
+    background-color: rgba(254, 238, 238, 0.7);;
+    border-radius: 5px;
+    margin: 2%;
+    padding: 2%; 
+    
+}
+
+#textbox h1 {
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+
+#textbox p {
+    padding: 5% 0%;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+#textbox tr {
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+#table th {
+    --bs-table-bg: rgba(37,37,37,1);
+    color: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+    padding: 2%;
+    border-spacing: 0 10px; 
+}
+
+#table tr {
+    border-radius: 5px;
+    border-spacing: 0 10px; 
+}
+
+#table th:hover {
+    cursor: pointer;
+    background-color: rgba(105,0,0,1);
+}
+
+/* This affects the character image */
+
+img {
+    height: 100%;
+}
