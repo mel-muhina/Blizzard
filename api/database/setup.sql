@@ -1,3 +1,4 @@
+
 DROP TABLE IF EXISTS submission;
 DROP TABLE IF EXISTS question;
 DROP TABLE IF EXISTS events;
@@ -73,3 +74,4 @@ VALUES
   ('Form an alliance with Crassus to gain further wealth and influence over the land, allowing him to garner further support later.', 1),
   ('Take the chance in forming an alliance with both men which could be risky.', 1),
   ('Julius Caesar formed a Triumvirate where he was able to garner both military support and wealth through both men thus allowing him more power, dominance, and influence over Rome, eventually securing the governorship over Gaul and advancing his military career.', 1);
+ 
