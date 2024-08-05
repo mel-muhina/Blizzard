@@ -16,8 +16,6 @@ class User {
       username,
     ]);
 
-    console.log(query.rows);
-
     if (query.rows.length !== 1) {
       throw new Error("Unable to authenticate user");
     }
