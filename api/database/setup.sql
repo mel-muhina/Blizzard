@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
   user_id INT GENERATED ALWAYS AS IDENTITY,
-  username TEXT,
+  username TEXT UNIQUE,
   password TEXT,
   highscore INT,
   role TEXT,
