@@ -9,50 +9,56 @@ DROP TABLE IF EXISTS User;
 
 
 CREATE TABLE Answers (
-  answer_id INT PRIMARY KEY,
+  answer_id INT GENERATED ALWAYS AS IDENTITY,
   answers VARCHAR(50),
   question_id INT 
+  PRIMARY KEY(answer_id)
 );
 
 CREATE TABLE Submissions (
-  user_id INT,
+  user_id INT GENERATED ALWAYS AS IDENTITY,
   question_id INT,
   outcome BOOLEAN,
   PRIMARY KEY (user_id, question_id),
   FOREIGN KEY (user_id) REFERENCES User(user_id),
   FOREIGN KEY (question_id) REFERENCES Questions(question_id)
+  PRIMARY KEY(user_id)
 );
 
 CREATE TABLE Questions (
-  question_id INT PRIMARY KEY,
+  question_id INT GENERATED ALWAYS AS IDENTITY,
   Question_description VARCHAR(200),
   answer_id INT,
   event_id INT,
   score INT,
+  PRIMARY KEY(question_id)
   FOREIGN KEY (answer_id) REFERENCES Answers(answer_id),
   FOREIGN KEY (event_id) REFERENCES Events(events_id)
 );
 
 CREATE TABLE User (
-  user_id INT PRIMARY KEY,
+  user_id INT GENERATED ALWAYS AS IDENTITY,
   username VARCHAR(50),
   password VARCHAR(10),
   highscore INT,
   role ENUM('admin', 'user', 'guest')
+  PRIMARY KEY(user_id)
 );
 
 CREATE TABLE Events (
-  events_id INT PRIMARY KEY,
+  events_id INT GENERATED ALWAYS AS IDENTITY,
   character_id INT,
   event_date DATE,
   event_description VARCHAR(300),
   FOREIGN KEY (character_id) REFERENCES Characters(character_id)
+  PRIMARY KEY(event_id)
 );
 
 CREATE TABLE Characters (
-  character_id INT PRIMARY KEY,
+  character_id INT GENERATED ALWAYS AS IDENTITY,
   character_name VARCHAR(50),
   birth_year INT
+  PRIMARY KEY(character_id)
 );
 
 
