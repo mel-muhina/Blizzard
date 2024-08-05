@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const questionsRouter = require("./routes/questions");
 const usersRouter = require("./routes/users");
+const authenticator = require("./middlewear/authenticator");
 // const eventsRouter = require("./routes/events");
 
 const app = express();
@@ -17,8 +18,8 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use("/users", usersRouter);
 app.use("/questions", questionsRouter);
 // app.use("/events", eventsRouter);
-app.use("/users", usersRouter);
 
 module.exports = app;
