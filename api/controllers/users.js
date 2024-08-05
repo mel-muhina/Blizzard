@@ -21,16 +21,14 @@ const login = async (req, res) => {
       },
       (err, data) => {
         if (err) {
-          res
-            .status(500)
-            .json({ success: false, error: "Error generating token" });
+          res.status(500).json({ error: "Error generating token" });
         } else {
-          res.status(200).json({ success: true, data: { token: data } });
+          res.status(200).json({ token: data });
         }
       }
     );
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -55,12 +53,12 @@ const signup = async (req, res) => {
             .status(500)
             .json({ success: false, error: "Error generating token" });
         } else {
-          res.status(201).json({ success: true, data: { token: data } });
+          res.status(201).json({ token: data });
         }
       }
     );
   } catch (err) {
-    res.status(404).send({ success: false, error: err });
+    res.status(404).send({ error: err });
   }
 };
 
