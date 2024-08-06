@@ -35,7 +35,6 @@ const game = new GameState({
   lives: 3,
   character: {},
 });
-console.log(game);
 
 // game.init();
 
