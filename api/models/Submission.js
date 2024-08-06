@@ -19,7 +19,25 @@ class Submission {
     return new Submission(newSubmission.rows[0]);
   }
 
-  static async getQuestionsStats() {}
+  static async getQuestionsStats() {
+    const result = await db.query(
+    `SELECT
+      q.question_id,
+      q.question_description,
+      COALESCE(
+        (SUM(CASE WHEN s.outcome = TRUE THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(s.submission_id), 0)),
+        0
+      ) AS percentage_correct
+    FROM
+      submissions s
+    JOIN
+      question q ON s.question_id = q.question_id
+    GROUP BY
+      q.question_id, q.question_description`
+  );
+
+  return result.rows;
+  }
 }
 
-module.exports = Submission;
+  module.exports = Submission;

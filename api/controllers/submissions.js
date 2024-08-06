@@ -1,8 +1,11 @@
 const Submission = require("../models/Submission");
 
 const show = async (req, res) => {
-  try {
-  } catch (err) {}
+  try {const stats = await Submission.getQuestionsStats();
+    res.status(200).json({ stats });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 const create = async (req, res) => {
@@ -14,3 +17,9 @@ const create = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+
+
+
+module.exports = { show, create };
