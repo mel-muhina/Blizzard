@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 
-const logger = require("./middleware/logger")
+const logger = require("./middleware/logger");
 
 const questionsRouter = require("./routes/questions");
 const usersRouter = require("./routes/users");
 const charactersRouter = require("./routes/characters");
-// const eventsRouter = require("./routes/events");
+const eventsRouter = require("./routes/events");
 
 const app = express();
 
@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/questions", questionsRouter);
 app.use("/characters", charactersRouter);
-// app.use("/events", eventsRouter);
+app.use("/events", eventsRouter);
 app.use("/users", usersRouter);
 
 module.exports = app;
