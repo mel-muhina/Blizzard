@@ -6,8 +6,9 @@ const User = require("../models/User");
 const login = async (req, res) => {
   try {
     const data = req.body;
-
+    console.log("before findByUsername");
     const user = await User.findByUsername(data.username);
+    console.log("after findByUsername");
 
     const match = await bcrypt.compare(data.password, user.password);
 
