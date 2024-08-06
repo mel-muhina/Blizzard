@@ -22,5 +22,6 @@ const updateQuestion = () => {
   questionDescription.textContent = gameState.question.questionDescription;
   gameState.question.answers.forEach((answer, i) => {
     quizOptions[i].textContent = answer.answers;
+    quizOptions[i].dataset.questionId = answer.answerId;
   });
 };
