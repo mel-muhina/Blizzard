@@ -5,7 +5,7 @@ const logger = require("./middleware/logger");
 
 const questionsRouter = require("./routes/questions");
 const usersRouter = require("./routes/users");
-const authenticator = require("./middlewear/authenticator");
+const authenticator = require("./middleware/authenticator");
 // const eventsRouter = require("./routes/events");
 const charactersRouter = require("./routes/characters");
 const eventsRouter = require("./routes/events");
