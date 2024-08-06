@@ -8,7 +8,7 @@ const authenticator = (req, res, next) => {
   jwt.verify(token, process.env.SECRET_TOKEN, async (err, data) => {
     if (err) return res.status(403).json({ err: err + "Invalid token" });
 
-    req.user = data.username;
+    req.user = data.user_id;
     next();
   });
 };
