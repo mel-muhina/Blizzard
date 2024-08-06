@@ -6,6 +6,7 @@ console.log("quizOptions test", quizOptions[0]);
 
 quizOptions[0].addEventListener("click", () => {
   console.log("This is option 1");
+  test();
 });
 
 quizOptions[1].addEventListener("click", () => {
