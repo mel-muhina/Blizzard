@@ -1,3 +1,5 @@
+const { CallTracker } = require("assert");
+
 class gameState {
   constructor({ user_highscore, question, character, lives, event }) {
     this.user_highscore = user_highscore;
@@ -81,7 +83,7 @@ class gameState {
   }
 
   async checkForAnswers(id) {
-    console.log("checkForAnswers question", this.question);
+    console.log("checkForAnswers question", this.question.answer_id);
 
     console.log("checkForAnswers", this.question.answer_id);
     if (this.question.answer_id === id) {
@@ -95,20 +97,17 @@ class gameState {
   }
 }
 
-const test = new gameState({
-  user_highscore: 0,
-  question: {},
-  event: {},
-  lives: 3,
-  character: {},
-  eventIndex: 1,
-});
+// const test = new gameState({
+//   user_highscore: 0,
+//   question: {},
+//   event: {},
+//   lives: 3,
+//   character: {},
+//   eventIndex: 1,
+// });
 
-test.fetchForQuestions(1);
-test.fetchForCharacter(1);
-test.checkForAnswers(1);
+// test.fetchForQuestions(1);
+// test.fetchForCharacter(1);
+// test.checkForAnswers(1);
 
-module.exports = {
-  test,
-  gameState,
-};
+module.exports = gameState;
