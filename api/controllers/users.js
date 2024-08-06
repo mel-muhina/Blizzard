@@ -62,4 +62,31 @@ const signup = async (req, res) => {
   }
 };
 
-module.exports = { login, signup };
+const showStats = async (req, res) => {
+  try {
+    const user = await User.getStats(req.user);
+    res
+      .status(200)
+      .json({ username: user.username, highscore: user.highscore });
+  } catch (err) {
+    res.status(404).json({ error: err.message });
+  }
+};
+
+const updateHighscore = async (req, res) => {
+  try {
+    const { highscore } = req.body;
+    const user = await User.findById(req.user);
+    console.log(user);
+    const updatedUser = await user.updateHighscore({
+      newHighscore: highscore,
+      user_id: req.user,
+    });
+    res.status(200).json({ highscore });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: err.message });
+  }
+};
+
+module.exports = { login, signup, showStats, updateHighscore };
