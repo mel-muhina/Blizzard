@@ -28,7 +28,8 @@ CREATE TABLE events (
   character_id INT,
   event_date DATE,
   event_description TEXT,
-  imageURL VARCHAR(255)
+  bgimageURL VARCHAR(255),
+  charImageURL VARCHAR(255),
   PRIMARY KEY(event_id),
   FOREIGN KEY (character_id) REFERENCES characters(character_id)
 );
@@ -65,8 +66,15 @@ CREATE TABLE submission (
 INSERT INTO characters (character_name, birth_year) 
 VALUES ('Julius Caesar', -100); 
 
-INSERT INTO events (character_id, event_date) 
-VALUES (1, '0060-01-01')
+INSERT INTO events (character_id, event_date, event_description, bgimageURL, charImageURL) 
+VALUES (1,
+ '0060-01-01'
+ 'testing the images',
+ 'https://picfiles.alphacoders.com/596/596659.jpg',
+ 'https://static.vecteezy.com/system/resources/previews/028/240/365/non_2x/anime-girls-cutting-sticker-transparent-background-ai-generative-free-png.png'
+ );
+
+
 
 INSERT INTO question (Question_description, answer_id, event_id, score, answer_description)
 VALUES ('It is 60 BCE, Rome conflicts with itself, various leaders looking to seize control for themselves.
