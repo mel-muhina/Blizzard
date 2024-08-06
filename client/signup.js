@@ -1,30 +1,38 @@
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('signup-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        const username = document.getElementById('signup-username').value;
-        const password = document.getElementById('signup-password').value;
+    const form = e.target;
+    const formData = new FormData(form);
 
-        try {
-            const response = await fetch('/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            });
+    try {
+        const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accepts: "application/json",
+            },
+            body: JSON.stringify({
+              username: formData.get("username"),
+              password: formData.get("password"),
+              //role: formData.get("role")
+            }),
+          };
+          const response = await fetch("https://blizzard-5jur.onrender.com/users/signup", options);
 
-            const result = await response.json();
-            if (response.ok) {
-                alert('Signup successful');
-                // Handle successful signup (e.g., redirect to login page)
-                window.location.href = 'login.html'; // Example redirect
-            } else {
-                alert(result.error || 'Signup failed');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred');
+          const data = await response.json();
+
+
+          if (response.ok) {
+            localStorage.setItem("token", data.token);
+            //NEEDS TO BE EDDITED FOR TEACHER PAGE
+            window.location.href = "index.html";
+          } else {
+            console.log(`signUp failed: ${data.error}`);
+          }
+        } catch (err) {
+          console.log("An error occurred while trying to sign up.");
+        } finally {
+          form.reset();
         }
-    });
-});
+      });
+      
