@@ -9,7 +9,7 @@ class Submission {
 
   static async create({ question_id, user_id, outcome }) {
     const newSubmission = await db.query(
-      "INSERT INTO submissions (user_id, question_id , outcome) VALUES ($1, $2 , $3) RETURNING *",
+      "INSERT INTO submission (user_id, question_id , outcome) VALUES ($1, $2 , $3) RETURNING *",
       [question_id, user_id, outcome]
     );
 
@@ -18,8 +18,6 @@ class Submission {
 
     return new Submission(newSubmission.rows[0]);
   }
-
-  static async getQuestionsStats() {}
 }
 
 module.exports = Submission;

@@ -7,6 +7,7 @@ const questionsRouter = require("./routes/questions");
 const usersRouter = require("./routes/users");
 const charactersRouter = require("./routes/characters");
 const eventsRouter = require("./routes/events");
+const submissionsRouter = require("./routes/submissions");
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use("/questions", questionsRouter);
 app.use("/characters", charactersRouter);
 app.use("/events", eventsRouter);
 app.use("/users", usersRouter);
+app.use("/submissions", submissionsRouter);
 
 module.exports = app;
