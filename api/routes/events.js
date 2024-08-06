@@ -1,7 +1,8 @@
 const { Router } = require("express");
+const eventsController = require("../controllers/events");
 
 const eventsRouter = Router();
 
-questionsRouter.get("/:characterName", characterController.index);
+eventsRouter.get("/:characterId", eventsController.index);
 
 module.exports = eventsRouter;
