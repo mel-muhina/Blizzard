@@ -16,7 +16,19 @@ class User {
       username,
     ]);
 
-    console.log(query.rows);
+    if (query.rows.length !== 1) {
+      throw new Error("Unable to authenticate user");
+    }
+
+    return new User(query.rows[0]);
+  }
+
+  static async findById(id) {
+    if (!id) throw new Error("Please provide a username");
+
+    const query = await db.query("SELECT * FROM users WHERE user_id = $1", [
+      id,
+    ]);
 
     if (query.rows.length !== 1) {
       throw new Error("Unable to authenticate user");
@@ -32,6 +44,35 @@ class User {
     const query = await db.query(
       "INSERT INTO users (username , password , highscore , role) VALUES ($1 , $2 , 0 , 'user') RETURNING *",
       [username, password]
+    );
+
+    if (query.rows.length !== 1) {
+      throw new Error("Unable to authenticate user");
+    }
+
+    return new User(query.rows[0]);
+  }
+
+  static async getStats(user_id) {
+    if (!user_id) throw new Error("Please provide a username");
+
+    const query = await db.query("SELECT * FROM users WHERE user_id = $1", [
+      user_id,
+    ]);
+
+    if (query.rows.length !== 1) {
+      throw new Error("Unable to authenticate user");
+    }
+
+    return new User(query.rows[0]);
+  }
+
+  async updateHighscore({ newHighscore, user_id }) {
+    if (!newHighscore) throw new Error("Please provide a highscore");
+
+    const query = await db.query(
+      "UPDATE users SET highscore = $1 WHERE user_id = $2 RETURNING *",
+      [newHighscore, user_id]
     );
 
     if (query.rows.length !== 1) {
