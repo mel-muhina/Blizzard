@@ -1,3 +1,5 @@
+const { CallTracker } = require("assert");
+
 class gameState {
   constructor({ user_highscore, question, character, lives, event }) {
     this.user_highscore = user_highscore;
@@ -32,9 +34,6 @@ class gameState {
   static async checkForAnswers() {}
 }
 
-const test = new gameState(fetchForUser);
-
 module.exports = {
-  test,
   gameState,
 };
