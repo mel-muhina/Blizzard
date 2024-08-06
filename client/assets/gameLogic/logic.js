@@ -1,5 +1,3 @@
-const { CallTracker } = require("assert");
-
 class gameState {
   constructor({ user_highscore, question, character, lives, event }) {
     this.user_highscore = user_highscore;
@@ -37,7 +35,6 @@ class gameState {
       if (response.ok) {
         const data = await response.json();
         this.character = data;
-        console.log("Check fetchForCharacter", this.character);
       } else {
         throw new Error("Error: " + response.status);
       }
@@ -73,7 +70,6 @@ class gameState {
       if (response.ok) {
         const data = await response.json();
         this.question = data;
-        console.log("Check fetchforQuestions", this.question);
       } else {
         throw new Error("Error: " + response.status);
       }
@@ -83,17 +79,17 @@ class gameState {
   }
 
   async checkForAnswers(id) {
-    console.log("checkForAnswers question", this.question.answer_id);
-
-    console.log("checkForAnswers", this.question.answer_id);
     if (this.question.answer_id === id) {
-      console.log("id check", id);
       this.eventIndex += 1;
-      console.log("correct Answer", this.eventIndex);
     } else {
-      console.log("wrong answer", this.lives);
       this.lives -= 1;
     }
+  }
+
+  async init() {
+    fetchForCharacter(1);
+    fetchForEvents(this.character.character_id);
+    fetchForQuestions(this.events[this.eventIndex].event_id);
   }
 }
 
