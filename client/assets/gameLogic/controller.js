@@ -71,8 +71,6 @@ const testQuestion = {
   ],
 };
 
-// https://blizzard-5jur.onrender.com/questions/1
-
 const updateQuestion = () => {
   const question = testQuestion;
   questionDescription.textContent = question.question_description;
