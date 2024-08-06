@@ -14,7 +14,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
             body: JSON.stringify({
               username: formData.get("username"),
               password: formData.get("password"),
-              role: formData.get("role")
+              //role: formData.get("role")
             }),
           };
           const response = await fetch("https://blizzard-5jur.onrender.com/users/signup", options);
