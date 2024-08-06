@@ -89,9 +89,9 @@ class gameState {
     if (this.question.answer_id === id) {
       console.log("id check", id);
       this.eventIndex += 1;
-      console.log("checkForAnswers index", this.eventIndex);
+      console.log("correct Answer", this.eventIndex);
     } else {
-      console.log("check for ans fail", this.lives);
+      console.log("wrong answer", this.lives);
       this.lives -= 1;
     }
   }

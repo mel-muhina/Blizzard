@@ -42,8 +42,7 @@ answersContainer.addEventListener("click", function (e) {
   const target = e.target.closest(".option");
 
   if (!target) return;
-
-  game.checkForAnswers(target.dataset.answerId);
+  game.checkForAnswers(parseInt(target.dataset.answerId));
 });
 
 const testQuestion = {
