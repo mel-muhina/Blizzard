@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1722888034116" clover="3.2.0">
-  <project timestamp="1722888034116" name="All files">
-    <metrics statements="39" coveredstatements="39" conditionals="14" coveredconditionals="14" methods="8" coveredmethods="8" elements="61" coveredelements="61" complexity="0" loc="39" ncloc="39" packages="2" files="4" classes="4"/>
+<coverage generated="1722970125656" clover="3.2.0">
+  <project timestamp="1722970125656" name="All files">
+    <metrics statements="50" coveredstatements="50" conditionals="24" coveredconditionals="24" methods="10" coveredmethods="10" elements="84" coveredelements="84" complexity="0" loc="50" ncloc="50" packages="2" files="4" classes="4"/>
     <package name="database">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="connect.js" path="C:\Users\kam_v\OneDrive\Ambiente de Trabalho\La Fosse\W5\Project\Blizzard\api\database\connect.js">
@@ -12,7 +12,7 @@
       </file>
     </package>
     <package name="models">
-      <metrics statements="36" coveredstatements="36" conditionals="14" coveredconditionals="14" methods="8" coveredmethods="8"/>
+      <metrics statements="47" coveredstatements="47" conditionals="24" coveredconditionals="24" methods="10" coveredmethods="10"/>
       <file name="Answer.js" path="C:\Users\kam_v\OneDrive\Ambiente de Trabalho\La Fosse\W5\Project\Blizzard\api\models\Answer.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="3" count="3" type="stmt"/>
@@ -38,25 +38,36 @@
         <line num="42" count="1" type="stmt"/>
       </file>
       <file name="User.js" path="C:\Users\kam_v\OneDrive\Ambiente de Trabalho\La Fosse\W5\Project\Blizzard\api\models\User.js">
-        <metrics statements="18" coveredstatements="18" conditionals="10" coveredconditionals="10" methods="3" coveredmethods="3"/>
+        <metrics statements="29" coveredstatements="29" conditionals="20" coveredconditionals="20" methods="5" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="6" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
         <line num="13" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="15" count="2" type="stmt"/>
         <line num="19" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="20" count="1" type="stmt"/>
         <line num="23" count="1" type="stmt"/>
-        <line num="27" count="3" type="cond" truecount="4" falsecount="0"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="30" count="2" type="stmt"/>
-        <line num="35" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="39" count="1" type="stmt"/>
-        <line num="43" count="1" type="stmt"/>
+        <line num="27" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="33" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="41" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="49" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="57" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="60" count="2" type="stmt"/>
+        <line num="65" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
       </file>
     </package>
   </project>

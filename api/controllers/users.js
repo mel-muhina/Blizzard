@@ -64,7 +64,7 @@ const signup = async (req, res) => {
 
 const showStats = async (req, res) => {
   try {
-    const user = await User.getStats(req.user);
+    const user = await User.findById(req.user);
     res
       .status(200)
       .json({ username: user.username, highscore: user.highscore });
@@ -77,11 +77,7 @@ const updateHighscore = async (req, res) => {
   try {
     const { highscore } = req.body;
     const user = await User.findById(req.user);
-    console.log(user);
-    const updatedUser = await user.updateHighscore({
-      newHighscore: highscore,
-      user_id: req.user,
-    });
+    const updatedUser = await user.updateHighscore(parseInt(highscore));
     res.status(200).json({ highscore });
   } catch (err) {
     console.log(err);
