@@ -12,6 +12,8 @@ const charactersRouter = require("./routes/characters");
 const eventsRouter = require("./routes/events");
 const submissionsRouter = require("./routes/submissions");
 
+// Emergency change
+
 const app = express();
 
 app.use(express.json());
