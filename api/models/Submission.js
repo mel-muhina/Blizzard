@@ -18,8 +18,6 @@ class Submission {
 
     return new Submission(newSubmission.rows[0]);
   }
-<<<<<<< HEAD
-=======
 
   static async getQuestionsStats() {
     const result = await db.query(
@@ -40,7 +38,6 @@ class Submission {
 
   return result.rows;
   }
->>>>>>> b663489262d48ae113c03868f239165a5b80f448
 }
 
   module.exports = Submission;
