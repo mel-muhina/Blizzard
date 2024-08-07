@@ -53,9 +53,29 @@ const updateQuestion = () => {
   });
 };
 
+const readSeachParams = () => {
+  // Get the current URL
+  const url = window.location.href;
+
+  // Create a URL object
+  const urlObj = new URL(url);
+
+  // Get the search parameters
+  const searchParams = new URLSearchParams(urlObj.search);
+
+  const characterId = searchParams.get("characterId");
+
+  if (!characterId) {
+    window.location.href = "characters.html";
+  }
+
+  return characterId;
+};
+
 (async function () {
   await checkAuth();
-  await game.init();
+  const characterId = readSeachParams();
+  await game.init(characterId);
   updateQuestion();
   updateImgs();
 })();

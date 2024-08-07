@@ -144,9 +144,9 @@ class gameState {
     }
   }
 
-  async init() {
+  async init(characterId) {
     await this.fetchForUser();
-    await this.fetchForCharacter(1);
+    await this.fetchForCharacter(characterId);
     await this.fetchForEvents(this.character.character_id);
     await this.fetchForQuestions(this.event[this.eventIndex].event_id);
     this.state = "running";
