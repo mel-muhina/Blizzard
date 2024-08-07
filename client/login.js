@@ -16,7 +16,10 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         password: formData.get("password"),
       }),
     };
-    const response = await fetch("http://localhost:3000/users/login", options);
+    const response = await fetch(
+      "https://blizzard-5jur.onrender.com/users/login",
+      options
+    );
 
     const data = await response.json();
 

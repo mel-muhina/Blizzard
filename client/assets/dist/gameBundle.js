@@ -4,75 +4,26 @@ const quizOptions = document.querySelectorAll("#table .option ");
 const questionDescription = document.querySelector(".question-description");
 const answersContainer = document.querySelector(".answers");
 
-const game = new GameState({
-  user_highscore: 0,
-  question: {
-    question_id: 1,
-    question_description:
-      "It is 60 BCE, Rome conflicts with itself, various leaders looking to seize control for themselves. Caesar comes up with a plan to form an alliance with another leader to boost his own power and control over the empire. Some leaders Caesar considers are Pompey the Great and Crassus. It is your job to advise him on the best course of action: a) Side with Pompey, b) Form an alliance with Crassus, c) Take the chance and form an alliance with both men.",
-    answer_id: 1,
-    event_id: 1,
-    score: 10,
-    answers: [
-      {
-        answer_id: 1,
-        answers:
-          "Side with Pompey, that way he gains further military power through his help.",
-      },
-      {
-        answer_id: 2,
-        answers:
-          "Form an alliance with Crassus to gain further wealth and influence over the land, allowing him to garner further support later.",
-      },
-      {
-        answer_id: 3,
-        answers:
-          "Take the chance in forming an alliance with both men which could be risky.",
-      },
-    ],
-  },
-  event: {},
-  lives: 3,
-  character: {},
-});
+const game = new GameState();
 
-// game.init();
+game.init();
 
-answersContainer.addEventListener("click", function (e) {
+answersContainer.addEventListener("click", async function (e) {
   const target = e.target.closest(".option");
 
   if (!target) return;
-  game.checkForAnswers(parseInt(target.dataset.answerId));
+  const result = await game.checkForAnswers(parseInt(target.dataset.answerId));
+  await game.sendSubmission(result);
+  const nextQuestion = await game.fetchNextQuestion();
+  if (nextQuestion === -1) {
+    // finish game
+  } else {
+    updateQuestion();
+  }
 });
 
-const testQuestion = {
-  question_id: 1,
-  question_description:
-    "It is 60 BCE, Rome conflicts with itself, various leaders looking to seize control for themselves. Caesar comes up with a plan to form an alliance with another leader to boost his own power and control over the empire. Some leaders Caesar considers are Pompey the Great and Crassus. It is your job to advise him on the best course of action: a) Side with Pompey, b) Form an alliance with Crassus, c) Take the chance and form an alliance with both men.",
-  answer_id: 1,
-  event_id: 1,
-  score: 10,
-  answers: [
-    {
-      answer_id: 1,
-      answers:
-        "Side with Pompey, that way he gains further military power through his help.",
-    },
-    {
-      answer_id: 2,
-      answers:
-        "Form an alliance with Crassus to gain further wealth and influence over the land, allowing him to garner further support later.",
-    },
-    {
-      answer_id: 3,
-      answers:
-        "Take the chance in forming an alliance with both men which could be risky.",
-    },
-  ],
-};
-
 const updateQuestion = () => {
-  const question = testQuestion;
+  const question = game.question;
   questionDescription.textContent = question.question_description;
   question.answers.forEach((answer, i) => {
     const thElement = quizOptions[i].querySelector(".option-descrition");
@@ -81,16 +32,28 @@ const updateQuestion = () => {
   });
 };
 
-updateQuestion();
+async function checkAuth() {
+  if (localStorage.getItem("token")) {
+  } else {
+    window.location.assign("./login.html");
+  }
+}
+
+(async function () {
+  await checkAuth();
+  await game.init();
+  updateQuestion();
+})();
 
 },{"./logic.js":2}],2:[function(require,module,exports){
 class gameState {
-  constructor({ user_highscore, question, character, lives, event }) {
-    this.user_highscore = user_highscore;
-    this.question = question;
-    this.character = character;
-    this.lives = lives;
-    this.event = event;
+  constructor() {
+    this.user_highscore = {};
+    this.score = 0;
+    this.question = {};
+    this.character = {};
+    this.lives = 3;
+    this.event = [];
     this.eventIndex = 0;
   }
 
@@ -129,23 +92,21 @@ class gameState {
     }
   }
 
-  //   static async fetchForEvents() {
-  //     try {
-  //       const response = await fetch(
-  //         `https://blizzard-5jur.onrender.com/characters/${id}`
-  //       );
-
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         this.character = data;
-  //         // console.log("check character", this.character);
-  //       } else {
-  //         throw new Error("Error: " + response.status);
-  //       }
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   }
+  async fetchForEvents(id) {
+    try {
+      const response = await fetch(
+        `https://blizzard-5jur.onrender.com/events/${id}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        this.event = data;
+      } else {
+        throw new Error("Error: " + response.status);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   async fetchForQuestions(id) {
     try {
@@ -165,32 +126,58 @@ class gameState {
   }
 
   async checkForAnswers(id) {
-    if (this.question.answer_id === id) {
-      this.eventIndex += 1;
+    this.eventIndex += 1;
+
+    if (this.question.answer_id < id) {
+      this.score += this.question.score;
+      return true;
+      // this.event.length === this.eventIndex
     } else {
       this.lives -= 1;
+      return false;
+    }
+  }
+
+  async fetchNextQuestion() {
+    if (this.eventIndex >= this.event.length) {
+      return -1;
+    } else {
+      await fetchForQuestions(this.event[this.eventIndex].event_id);
+      return this.question;
+    }
+  }
+
+  async sendSubmission(outcome) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+
+      body: JSON.stringify({ question_id: this.question.question_id, outcome }),
+    };
+
+    const response = await fetch(
+      "https://blizzard-5jur.onrender.com/submissions/",
+      options
+    );
+
+    if (!response.ok) {
+      console.log("Error to create submission");
     }
   }
 
   async init() {
-    fetchForCharacter(1);
-    fetchForEvents(this.character.character_id);
-    fetchForQuestions(this.events[this.eventIndex].event_id);
+    await this.fetchForCharacter(1);
+    await this.fetchForEvents(this.character.character_id);
+    await this.fetchForQuestions(this.event[this.eventIndex].event_id);
+    // console.log("Fetch for Character", this.character);
+    // console.log("Fetch for Events", this.event[this.eventIndex].event_id);
+    // console.log("Event Index", this.eventIndex);
+    // console.log("Fetch for Questions", this.question);
   }
 }
-
-// const test = new gameState({
-//   user_highscore: 0,
-//   question: {},
-//   event: {},
-//   lives: 3,
-//   character: {},
-//   eventIndex: 1,
-// });
-
-// test.fetchForQuestions(1);
-// test.fetchForCharacter(1);
-// test.checkForAnswers(1);
 
 module.exports = gameState;
 
