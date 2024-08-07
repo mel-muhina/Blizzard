@@ -19,6 +19,7 @@ CREATE TABLE characters (
   character_id INT GENERATED ALWAYS AS IDENTITY,
   character_name TEXT,
   birth_year INT,
+  image_url VARCHAR(255),
   PRIMARY KEY(character_id)
 );
 
@@ -27,6 +28,8 @@ CREATE TABLE events (
   character_id INT,
   event_date DATE,
   event_description TEXT,
+  bg_image_url VARCHAR(255),
+  char_image_url VARCHAR(255),
   PRIMARY KEY(event_id),
   FOREIGN KEY (character_id) REFERENCES characters(character_id)
 );
@@ -44,6 +47,7 @@ CREATE TABLE question (
   answer_id INT,
   event_id INT,
   score INT,
+  answer_description VARCHAR(300),
   PRIMARY KEY(question_id),
   FOREIGN KEY (answer_id) REFERENCES answers(answer_id),
   FOREIGN KEY (event_id) REFERENCES events(event_id)
@@ -62,15 +66,32 @@ CREATE TABLE submission (
 INSERT INTO characters (character_name, birth_year) 
 VALUES ('Julius Caesar', -100); 
 
-INSERT INTO events (character_id, event_date, event_description) 
-VALUES (1, '0060-01-01', 'In 60 BCE, Rome conflicts with itself as various leaders seek control. Julius Caesar considers forming an alliance with Pompey the Great and Crassus to boost his power.');
+INSERT INTO events (character_id, event_date, event_description, bg_image_url, char_image_url) 
+VALUES (1,
+ '0060-01-01',
+ 'testing the images',
+ 'https://picfiles.alphacoders.com/596/596659.jpg',
+ 'https://static.vecteezy.com/system/resources/previews/028/240/365/non_2x/anime-girls-cutting-sticker-transparent-background-ai-generative-free-png.png'
+ );
 
-INSERT INTO question (Question_description, answer_id, event_id, score) 
-VALUES ('It is 60 BCE, Rome conflicts with itself, various leaders looking to seize control for themselves. Caesar comes up with a plan to form an alliance with another leader to boost his own power and control over the empire. Some leaders Caesar considers are Pompey the Great and Crassus. It is your job to advise him on the best course of action: a) Side with Pompey, b) Form an alliance with Crassus, c) Take the chance and form an alliance with both men.', NULL, 1, 10) , ('test', 5, 1, 10);
+
+
+INSERT INTO question (Question_description, answer_id, event_id, score, answer_description)
+VALUES ('It is 60 BCE, Rome conflicts with itself, various leaders looking to seize control for themselves.
+ Caesar comes up with a plan to form an alliance with another leader to boost his own power and control over the empire. 
+ Some leaders Caesar considers are Pompey the Great and Crassus. It is your job to advise him on the best course of action:', 
+ NULL, 1, 10, 'Julius Caesar formed a Triumvirate where he was able to garner both military support and wealth through both
+  men thus allowing him more power, dominance, and influence over Rome, eventually securing the governorship over Gaul and 
+  advancing his military career.');
+ 
 
 INSERT INTO answers (answers, question_id) 
 VALUES 
   ('Side with Pompey, that way he gains further military power through his help.', 1),
   ('Form an alliance with Crassus to gain further wealth and influence over the land, allowing him to garner further support later.', 1),
-  ('Take the chance in forming an alliance with both men which could be risky.', 1),
- 
+  ('Take the chance in forming an alliance with both men which could be risky.', 1);
+  
+  
+
+
+
