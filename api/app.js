@@ -6,7 +6,8 @@ const logger = require("./middleware/logger");
 const questionsRouter = require("./routes/questions");
 const usersRouter = require("./routes/users");
 const authenticator = require("./middleware/authenticator");
-// const eventsRouter = require("./routes/events");
+const charactersRouter = require("./routes/characters");
+const submissionsRouter = require("./routes/submissions");
 const charactersRouter = require("./routes/characters");
 const eventsRouter = require("./routes/events");
 const submissionsRouter = require("./routes/submissions");
@@ -26,7 +27,6 @@ app.get("/", (req, res) => {
 
 app.use("/users", usersRouter);
 app.use("/questions", questionsRouter);
-// app.use("/events", eventsRouter);
 app.use("/characters", charactersRouter);
 app.use("/events", eventsRouter);
 app.use("/users", usersRouter);
