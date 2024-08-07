@@ -16,6 +16,16 @@ class Character {
 
         return new Character(response.rows[0]);
       }
+
+      static async getAll() {
+        const response = await db.query("SELECT * FROM characters;");
+
+        if (response.rows.length < 1) {
+          throw new Error("Unable to locate any characters.")
+        }
+
+        return new Character(response.rows[0]);
+      }  
      
 }
 
