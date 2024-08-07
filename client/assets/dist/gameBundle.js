@@ -7,6 +7,7 @@ const answersContainer = document.querySelector(".answers");
 const bgContainer = document.querySelector("#bg-container");
 const charContainer = document.querySelector("#char-img");
 
+
 const game = new GameState();
 
 answersContainer.addEventListener("click", async function (e) {
@@ -15,12 +16,23 @@ answersContainer.addEventListener("click", async function (e) {
   if (!target) return;
   const result = await game.checkForAnswers(parseInt(target.dataset.answerId));
   await game.sendSubmission(result);
-  const nextQuestion = await game.fetchNextQuestion();
-  if (nextQuestion === -1) {
-    // finish game
-  } else {
+  // Display answer modal
+  //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
+
+  game.checkGameState()
+  if (game.state === "running"){
+    await game.fetchNextQuestion(); 
     updateQuestion();
   }
+  else if (game.state === "lost"){
+    gameoverModal.openModal();
+    // trigger loss modal
+  }
+  else if (game.state === "win"){
+    winModal.openModal();
+    //trigger win modal
+  }
+
 });
 
 const updateImgs = () => {
@@ -65,7 +77,6 @@ class gameState {
     this.lives = 3;
     this.event = [];
     this.eventIndex = 0;
-
   }
 
   async fetchForUser() {
@@ -184,7 +195,8 @@ class gameState {
         outcome: outcome,
       }),
     };
-
+  
+  
     const response = await fetch(
       "https://blizzard-5jur.onrender.com/submissions/",
       options
@@ -192,6 +204,18 @@ class gameState {
 
     if (!response.ok) {
       console.log("Error to create submission");
+    }
+  }
+
+  checkGameState(){
+    if (this.lives == 0) {
+      this.state = "lost"
+      return
+    }
+    if (this.eventIndex >= this.event.length)
+    {
+      this.state = "won"
+      return
     }
   }
 
