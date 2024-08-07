@@ -1,13 +1,18 @@
 const express = require("express");
 const cors = require("cors");
 
-const logger = require("./middleware/logger")
+const logger = require("./middleware/logger");
 
 const questionsRouter = require("./routes/questions");
 const usersRouter = require("./routes/users");
+const authenticator = require("./middleware/authenticator");
+// const charactersRouter = require("./routes/characters");
+// const submissionsRouter = require("./routes/submissions");
 const charactersRouter = require("./routes/characters");
-const submissionsRouter = require("./routes/submissions")
-// const eventsRouter = require("./routes/events");
+const eventsRouter = require("./routes/events");
+const submissionsRouter = require("./routes/submissions");
+
+// Emergency change
 
 const app = express();
 
@@ -22,10 +27,11 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use("/users", usersRouter);
 app.use("/questions", questionsRouter);
 app.use("/characters", charactersRouter);
-// app.use("/events", eventsRouter);
+app.use("/events", eventsRouter);
 app.use("/users", usersRouter);
-app.use("/submissions", submissionsRouter)
+app.use("/submissions", submissionsRouter);
 
 module.exports = app;

@@ -19,7 +19,7 @@ CREATE TABLE characters (
   character_id INT GENERATED ALWAYS AS IDENTITY,
   character_name TEXT,
   birth_year INT,
-  imageURL VARCHAR(255),
+  image_url VARCHAR(255),
   PRIMARY KEY(character_id)
 );
 
@@ -28,8 +28,8 @@ CREATE TABLE events (
   character_id INT,
   event_date DATE,
   event_description TEXT,
-  bgimageURL VARCHAR(255),
-  charImageURL VARCHAR(255),
+  bg_image_url VARCHAR(255),
+  char_image_url VARCHAR(255),
   PRIMARY KEY(event_id),
   FOREIGN KEY (character_id) REFERENCES characters(character_id)
 );
@@ -66,7 +66,7 @@ CREATE TABLE submission (
 INSERT INTO characters (character_name, birth_year) 
 VALUES ('Julius Caesar', -100); 
 
-INSERT INTO events (character_id, event_date, event_description, bgimageURL, charImageURL) 
+INSERT INTO events (character_id, event_date, event_description, bg_image_url, char_image_url) 
 VALUES (1,
  '0060-01-01',
  'testing the images',
