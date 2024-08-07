@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+}
+
+.welcome-container{
+    display: flex;
+    align-items: center;
+}
+
+#instructionsLabel .modal-content {
+    height: 100%;
+    border-radius: 0;
+    background-color: black;
+}
+
+#instructionsLabel .modal-body {
+    overflow-y: auto;
+    color: red;
+}

@@ -7,6 +7,7 @@ class gameState {
     this.lives = 3;
     this.event = [];
     this.eventIndex = 0;
+    this.state = "beforeInit"
   }
 
   //   static async fetchForUser() {
@@ -109,7 +110,8 @@ class gameState {
 
       body: JSON.stringify({ question_id: this.question.question_id, outcome }),
     };
-
+  
+  
     const response = await fetch(
       "https://blizzard-5jur.onrender.com/submissions/",
       options
@@ -120,10 +122,23 @@ class gameState {
     }
   }
 
+  checkGameState(){
+    if (this.lives == 0) {
+      this.state = "lost"
+      return
+    }
+    if (this.eventIndex >= this.event.length)
+    {
+      this.state = "won"
+      return
+    }
+  }
+
   async init() {
     await this.fetchForCharacter(1);
     await this.fetchForEvents(this.character.character_id);
     await this.fetchForQuestions(this.event[this.eventIndex].event_id);
+    this.state = "running";
     // console.log("Fetch for Character", this.character);
     // console.log("Fetch for Events", this.event[this.eventIndex].event_id);
     // console.log("Event Index", this.eventIndex);
