@@ -24,11 +24,16 @@ answersContainer.addEventListener("click", async function (e) {
 });
 
 const updateImgs = () => {
-  const char_img = game.char_image_url;
-  const bg_img = game.bg_image_url;
-
+  const curEvent = game.event[game.eventIndex]
+  const char_img = curEvent.char_image_url;
+  const bg_img = curEvent.bg_image_url;
+  //  console.log(char_img)
+  //  console.log(first)
+const test = `url(${char_img})`
+console.log("updateimg Teat", test)
   bgContainer.style.backgroundImage = `url(${bg_img})`;
   charContainer.style.backgroundImage = `url(${char_img})`;
+  console.log(charContainer)
 };
 
 const updateQuestion = () => {
@@ -47,6 +52,7 @@ const updateQuestion = () => {
   await checkAuth();
   await game.init();
   updateQuestion();
+  updateImgs();
 })();
 
 },{"./../utils/checkAuth.js":3,"./logic.js":2}],2:[function(require,module,exports){
@@ -59,8 +65,7 @@ class gameState {
     this.lives = 3;
     this.event = [];
     this.eventIndex = 0;
-    this.char_image_url = {};
-    this.bg_image_url = {};
+
   }
 
   async fetchForUser() {
@@ -118,8 +123,7 @@ class gameState {
         const bgImg = data[0].bg_image_url;
 
         this.event = data;
-        this.char_image_url = charImg;
-        this.bg_image_url = bgImg;
+
       } else {
         throw new Error("Error: " + response.status);
       }
@@ -133,6 +137,7 @@ class gameState {
       const response = await fetch(
         `https://blizzard-5jur.onrender.com/questions/${id}`
       );
+      console.log("Fetch for questions check")
 
       if (response.ok) {
         const data = await response.json();
@@ -162,7 +167,7 @@ class gameState {
     if (this.eventIndex >= this.event.length) {
       return -1;
     } else {
-      await fetchForQuestions(this.event[this.eventIndex].event_id);
+      await this.fetchForQuestions(this.event[this.eventIndex].event_id);
       return this.question;
     }
   }

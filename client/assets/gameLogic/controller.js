@@ -23,11 +23,16 @@ answersContainer.addEventListener("click", async function (e) {
 });
 
 const updateImgs = () => {
-  const char_img = game.char_image_url;
-  const bg_img = game.bg_image_url;
-
+  const curEvent = game.event[game.eventIndex]
+  const char_img = curEvent.char_image_url;
+  const bg_img = curEvent.bg_image_url;
+  //  console.log(char_img)
+  //  console.log(first)
+const test = `url(${char_img})`
+console.log("updateimg Teat", test)
   bgContainer.style.backgroundImage = `url(${bg_img})`;
   charContainer.style.backgroundImage = `url(${char_img})`;
+  console.log(charContainer)
 };
 
 const updateQuestion = () => {
@@ -46,4 +51,5 @@ const updateQuestion = () => {
   await checkAuth();
   await game.init();
   updateQuestion();
+  updateImgs();
 })();
