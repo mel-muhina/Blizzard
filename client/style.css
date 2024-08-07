@@ -11,9 +11,24 @@ body {
 .fullcontainer {
   padding-top: 5%;
   background-image: url("assets/background1.jpg");
+  background-size: 100%;
+  background-size: cover; 
+  background-repeat: no-repeat;
   background-color: black;
   border-radius: 5px;
   text-align: center;
+  background-position: center;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+#char-img {
+  background-image: url("assets/juliusc.png");
+  background-position: center top;
+  background-size: 100% 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* This is purely the text part of the game */
@@ -61,6 +76,6 @@ body {
 
 /* This affects the character image */
 
-img {
+/* img {
   height: 100%;
-}
+} */

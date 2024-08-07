@@ -7,8 +7,7 @@ class gameState {
     this.lives = 3;
     this.event = [];
     this.eventIndex = 0;
-    this.char_image_url = {};
-    this.bg_image_url = {};
+
   }
 
   //   static async fetchForUser() {
@@ -54,12 +53,8 @@ class gameState {
 
       if (response.ok) {
         const data = await response.json();
-        const charImg = data[0].char_image_url
-        const bgImg = data[0].bg_image_url
-
         this.event = data;
-        this.char_image_url = charImg;
-        this.bg_image_url = bgImg;
+
       } else {
         throw new Error("Error: " + response.status);
       }
