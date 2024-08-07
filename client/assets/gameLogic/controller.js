@@ -8,8 +8,6 @@ const charContainer = document.querySelector("#char-img");
 
 const game = new GameState();
 
-game.init();
-
 answersContainer.addEventListener("click", async function (e) {
   const target = e.target.closest(".option");
 
@@ -45,6 +43,7 @@ const updateQuestion = () => {
 };
 
 (async function () {
+  console.log("IIFE");
   await checkAuth();
   await game.init();
   updateQuestion();

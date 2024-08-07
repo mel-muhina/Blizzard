@@ -1,8 +1,15 @@
 async function checkAuth() {
+  const options = {
+    method: "GET",
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  };
   const response = await fetch(
-    "https://blizzard-5jur.onrender.com/users/validate-token"
+    "https://blizzard-5jur.onrender.com/users/validate-token",
+    options
   );
-  console.log(response);
+
   if (response.status !== 200) {
     window.location.href = "login.html";
   }

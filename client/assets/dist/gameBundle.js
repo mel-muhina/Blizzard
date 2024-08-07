@@ -1,15 +1,13 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const GameState = require("./logic.js");
+const checkAuth = require("./../utils/checkAuth.js");
 const quizOptions = document.querySelectorAll("#table .option ");
 const questionDescription = document.querySelector(".question-description");
 const answersContainer = document.querySelector(".answers");
 const bgContainer = document.querySelector("#bg-container");
 const charContainer = document.querySelector("#char-img");
 
-
 const game = new GameState();
-
-game.init();
 
 answersContainer.addEventListener("click", async function (e) {
   const target = e.target.closest(".option");
@@ -28,16 +26,15 @@ answersContainer.addEventListener("click", async function (e) {
 const updateImgs = () => {
   const char_img = game.char_image_url;
   const bg_img = game.bg_image_url;
-  console.log("char_img")
+
   bgContainer.style.backgroundImage = `url(${bg_img})`;
   charContainer.style.backgroundImage = `url(${char_img})`;
-
 };
 
 const updateQuestion = () => {
   const question = game.question;
- 
-  updateImgs()
+
+  updateImgs();
   questionDescription.textContent = question.question_description;
   question.answers.forEach((answer, i) => {
     const thElement = quizOptions[i].querySelector(".option-descrition");
@@ -46,24 +43,14 @@ const updateQuestion = () => {
   });
 };
 
-
-
-async function checkAuth() {
-  if (localStorage.getItem("token")) {
-  } else {
-    window.location.assign("./login.html");
-  }
-}
-
 (async function () {
+  console.log("IIFE");
   await checkAuth();
   await game.init();
   updateQuestion();
-  
-  
 })();
 
-},{"./logic.js":2}],2:[function(require,module,exports){
+},{"./../utils/checkAuth.js":3,"./logic.js":2}],2:[function(require,module,exports){
 class gameState {
   constructor() {
     this.user_highscore = {};
@@ -206,5 +193,25 @@ class gameState {
 }
 
 module.exports = gameState;
+
+},{}],3:[function(require,module,exports){
+async function checkAuth() {
+  const options = {
+    method: "GET",
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  };
+  const response = await fetch(
+    "https://blizzard-5jur.onrender.com/users/validate-token",
+    options
+  );
+
+  if (response.status !== 200) {
+    window.location.href = "login.html";
+  }
+}
+
+module.exports = checkAuth;
 
 },{}]},{},[1]);
