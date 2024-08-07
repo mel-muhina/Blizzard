@@ -8,10 +8,10 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
   user_id INT GENERATED ALWAYS AS IDENTITY,
-  username TEXT UNIQUE,
-  password TEXT,
+  username TEXT UNIQUE  NOT NULL,
+  password TEXT NOT NULL,
   highscore INT,
-  role TEXT,
+  role VARCHAR(50),
   PRIMARY KEY(user_id)
 );
 
@@ -36,7 +36,7 @@ CREATE TABLE events (
 
 CREATE TABLE answers (
   answer_id INT GENERATED ALWAYS AS IDENTITY,
-  answers TEXT,
+  answer_text VARCHAR(500) NOT NULL,
   question_id INT,
   PRIMARY KEY(answer_id)
 );
@@ -47,7 +47,7 @@ CREATE TABLE question (
   answer_id INT,
   event_id INT,
   score INT,
-  answer_description  VARCHAR(600),
+  answer_description  VARCHAR(500),
   PRIMARY KEY(question_id),
   FOREIGN KEY (answer_id) REFERENCES answers(answer_id),
   FOREIGN KEY (event_id) REFERENCES events(event_id)
@@ -103,7 +103,7 @@ all boasting power and strength. It is your job to advise him on the best course
   
  
 
-INSERT INTO answers (answers, question_id) 
+INSERT INTO answers (answer_text, question_id) 
 VALUES 
   ('Side with Pompey, that way he gains further military power through his help.', 1),
   ('Form an alliance with Crassus to gain further wealth and influence over the land, allowing him to garner further support later.', 1),
