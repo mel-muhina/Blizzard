@@ -1,14 +1,12 @@
 const GameState = require("./logic.js");
+const checkAuth = require("./../utils/checkAuth.js");
 const quizOptions = document.querySelectorAll("#table .option ");
 const questionDescription = document.querySelector(".question-description");
 const answersContainer = document.querySelector(".answers");
 const bgContainer = document.querySelector("#bg-container");
 const charContainer = document.querySelector("#char-img");
 
-
 const game = new GameState();
-
-game.init();
 
 answersContainer.addEventListener("click", async function (e) {
   const target = e.target.closest(".option");
@@ -30,13 +28,12 @@ const updateImgs = () => {
 
   bgContainer.style.backgroundImage = `url(${bg_img})`;
   charContainer.style.backgroundImage = `url(${char_img})`;
-
 };
 
 const updateQuestion = () => {
   const question = game.question;
- 
-  updateImgs()
+
+  updateImgs();
   questionDescription.textContent = question.question_description;
   question.answers.forEach((answer, i) => {
     const thElement = quizOptions[i].querySelector(".option-descrition");
@@ -45,19 +42,8 @@ const updateQuestion = () => {
   });
 };
 
-
-
-async function checkAuth() {
-  if (localStorage.getItem("token")) {
-  } else {
-    window.location.assign("./login.html");
-  }
-}
-
 (async function () {
   await checkAuth();
   await game.init();
   updateQuestion();
-  
-  
 })();
