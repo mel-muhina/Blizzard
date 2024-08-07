@@ -43,7 +43,6 @@ const updateQuestion = () => {
 };
 
 (async function () {
-  console.log("IIFE");
   await checkAuth();
   await game.init();
   updateQuestion();
