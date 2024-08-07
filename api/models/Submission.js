@@ -29,7 +29,7 @@ class Submission {
         0
       ) AS percentage_correct
     FROM
-      submissions s
+      submission s
     JOIN
       question q ON s.question_id = q.question_id
     GROUP BY

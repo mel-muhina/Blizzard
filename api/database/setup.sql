@@ -19,7 +19,7 @@ CREATE TABLE characters (
   character_id INT GENERATED ALWAYS AS IDENTITY,
   character_name TEXT,
   birth_year INT,
-  imageURL VARCHAR(255)
+  imageURL VARCHAR(255),
   PRIMARY KEY(character_id)
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE question (
   answer_id INT,
   event_id INT,
   score INT,
-  answer_description VARCHAR(300)
+  answer_description VARCHAR(300),
   PRIMARY KEY(question_id),
   FOREIGN KEY (answer_id) REFERENCES answers(answer_id),
   FOREIGN KEY (event_id) REFERENCES events(event_id)
@@ -68,7 +68,7 @@ VALUES ('Julius Caesar', -100);
 
 INSERT INTO events (character_id, event_date, event_description, bgimageURL, charImageURL) 
 VALUES (1,
- '0060-01-01'
+ '0060-01-01',
  'testing the images',
  'https://picfiles.alphacoders.com/596/596659.jpg',
  'https://static.vecteezy.com/system/resources/previews/028/240/365/non_2x/anime-girls-cutting-sticker-transparent-background-ai-generative-free-png.png'
@@ -89,7 +89,7 @@ INSERT INTO answers (answers, question_id)
 VALUES 
   ('Side with Pompey, that way he gains further military power through his help.', 1),
   ('Form an alliance with Crassus to gain further wealth and influence over the land, allowing him to garner further support later.', 1),
-  ('Take the chance in forming an alliance with both men which could be risky.', 1),
+  ('Take the chance in forming an alliance with both men which could be risky.', 1);
   
   
 
