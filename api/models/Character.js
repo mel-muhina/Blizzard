@@ -23,8 +23,7 @@ class Character {
         if (response.rows.length < 1) {
           throw new Error("Unable to locate any characters.")
         }
-
-        return new Character(response.rows[0]);
+        return response.rows.map(c => new Character(c));
       }  
      
 }
