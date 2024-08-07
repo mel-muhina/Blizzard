@@ -73,6 +73,7 @@ class gameState {
       const response = await fetch(
         `https://blizzard-5jur.onrender.com/questions/${id}`
       );
+      console.log("Fetch for questions check")
 
       if (response.ok) {
         const data = await response.json();
@@ -102,7 +103,7 @@ class gameState {
     if (this.eventIndex >= this.event.length) {
       return -1;
     } else {
-      await fetchForQuestions(this.event[this.eventIndex].event_id);
+      await this.fetchForQuestions(this.event[this.eventIndex].event_id);
       return this.question;
     }
   }

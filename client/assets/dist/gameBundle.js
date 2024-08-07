@@ -9,7 +9,7 @@ const charContainer = document.querySelector("#char-img");
 
 const game = new GameState();
 
-game.init();
+// game.init();
 
 answersContainer.addEventListener("click", async function (e) {
   const target = e.target.closest(".option");
@@ -26,9 +26,10 @@ answersContainer.addEventListener("click", async function (e) {
 });
 
 const updateImgs = () => {
-  const char_img = game.char_image_url;
-  const bg_img = game.bg_image_url;
-  console.log("char_img")
+  const curEvent = game.event[game.eventIndex]
+  const char_img = curEvent.char_image_url;
+  const bg_img = curEvent.bg_image_url;
+
   bgContainer.style.backgroundImage = `url(${bg_img})`;
   charContainer.style.backgroundImage = `url(${char_img})`;
 
@@ -139,6 +140,7 @@ class gameState {
       const response = await fetch(
         `https://blizzard-5jur.onrender.com/questions/${id}`
       );
+      console.log("Fetch for questions check")
 
       if (response.ok) {
         const data = await response.json();
@@ -168,7 +170,7 @@ class gameState {
     if (this.eventIndex >= this.event.length) {
       return -1;
     } else {
-      await fetchForQuestions(this.event[this.eventIndex].event_id);
+      await this.fetchForQuestions(this.event[this.eventIndex].event_id);
       return this.question;
     }
   }

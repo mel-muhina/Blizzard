@@ -8,7 +8,7 @@ const charContainer = document.querySelector("#char-img");
 
 const game = new GameState();
 
-game.init();
+// game.init();
 
 answersContainer.addEventListener("click", async function (e) {
   const target = e.target.closest(".option");
@@ -25,8 +25,9 @@ answersContainer.addEventListener("click", async function (e) {
 });
 
 const updateImgs = () => {
-  const char_img = game.char_image_url;
-  const bg_img = game.bg_image_url;
+  const curEvent = game.event[game.eventIndex]
+  const char_img = curEvent.char_image_url;
+  const bg_img = curEvent.bg_image_url;
 
   bgContainer.style.backgroundImage = `url(${bg_img})`;
   charContainer.style.backgroundImage = `url(${char_img})`;
