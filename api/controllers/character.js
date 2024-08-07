@@ -11,4 +11,14 @@ const show = async (req, res) => {
   }
 };
 
-module.exports = { show };
+const showAll = async (req, res) => {
+  try {
+    const findAllCharacters = await Character.getAll();
+ 
+    res.status(200).json(findAllCharacters);
+  } catch (err) {
+    res.status(404).json({ error: err.message });
+  }
+};
+
+module.exports = { show, showAll };
