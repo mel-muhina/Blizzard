@@ -10,7 +10,7 @@ class Submission {
   static async create({ question_id, user_id, outcome }) {
     const newSubmission = await db.query(
       "INSERT INTO submission (user_id, question_id , outcome) VALUES ($1, $2 , $3) RETURNING *",
-      [question_id, user_id, outcome]
+      [user_id, question_id, outcome]
     );
 
     if (newSubmission.rows.length !== 1)
@@ -21,7 +21,7 @@ class Submission {
 
   static async getQuestionsStats() {
     const result = await db.query(
-    `SELECT
+      `SELECT
       q.question_id,
       q.question_description,
       COALESCE(
@@ -34,10 +34,10 @@ class Submission {
       question q ON s.question_id = q.question_id
     GROUP BY
       q.question_id, q.question_description`
-  );
+    );
 
-  return result.rows;
+    return result.rows;
   }
 }
 
-  module.exports = Submission;
+module.exports = Submission;

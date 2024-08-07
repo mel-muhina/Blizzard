@@ -1,31 +1,40 @@
 class gameState {
   constructor() {
-    this.user_highscore = {};
+    this.user_highscore = 0;
     this.score = 0;
     this.question = {};
     this.character = {};
     this.lives = 3;
     this.event = [];
     this.eventIndex = 0;
+
   }
 
-  //   static async fetchForUser() {
-  //     try {
-  //       const response = await fetch(
-  //         `https://blizzard-5jur.onrender.com/characters/1`
-  //       );
+  async fetchForUser() {
+    try {
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      };
 
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         console.log("check data", data);
-  //         data.forEach((character) => addEntry(entry)); // Map over all entries
-  //       } else {
-  //         throw new Error("Error: " + response.status);
-  //       }
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   }
+      const response = await fetch(
+        `https://blizzard-5jur.onrender.com/users/stats`,
+        options
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        this.user_highscore = data.highscore;
+      } else {
+        throw new Error("Error: " + response.status);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   async fetchForCharacter(id) {
     try {
@@ -49,9 +58,14 @@ class gameState {
       const response = await fetch(
         `https://blizzard-5jur.onrender.com/events/${id}`
       );
+
       if (response.ok) {
         const data = await response.json();
+        const charImg = data[0].char_image_url;
+        const bgImg = data[0].bg_image_url;
+
         this.event = data;
+
       } else {
         throw new Error("Error: " + response.status);
       }
@@ -65,6 +79,7 @@ class gameState {
       const response = await fetch(
         `https://blizzard-5jur.onrender.com/questions/${id}`
       );
+      console.log("Fetch for questions check")
 
       if (response.ok) {
         const data = await response.json();
@@ -94,7 +109,7 @@ class gameState {
     if (this.eventIndex >= this.event.length) {
       return -1;
     } else {
-      await fetchForQuestions(this.event[this.eventIndex].event_id);
+      await this.fetchForQuestions(this.event[this.eventIndex].event_id);
       return this.question;
     }
   }
@@ -106,8 +121,10 @@ class gameState {
         "Content-type": "application/json",
         Authorization: localStorage.getItem("token"),
       },
-
-      body: JSON.stringify({ question_id: this.question.question_id, outcome }),
+      body: JSON.stringify({
+        question_id: this.question.question_id,
+        outcome: outcome,
+      }),
     };
 
     const response = await fetch(
@@ -121,9 +138,11 @@ class gameState {
   }
 
   async init() {
+    await this.fetchForUser();
     await this.fetchForCharacter(1);
     await this.fetchForEvents(this.character.character_id);
     await this.fetchForQuestions(this.event[this.eventIndex].event_id);
+    console.log(this);
     // console.log("Fetch for Character", this.character);
     // console.log("Fetch for Events", this.event[this.eventIndex].event_id);
     // console.log("Event Index", this.eventIndex);
