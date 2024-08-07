@@ -27,7 +27,6 @@ async function fetchCharacterData() {
 
 function renderCards(characters) {
   // Create card elements
-  console.log(characters);
   characters.forEach((card) => {
     const cardElement = document.createElement("div");
     cardElement.className = "col-md-3 text-center mb-4";

@@ -20,13 +20,15 @@ answersContainer.addEventListener("click", async function (e) {
   //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
 
   game.checkGameState();
+
+  console.log(game.state, game.lives);
   if (game.state === "running") {
     await game.fetchNextQuestion();
     updateQuestion();
   } else if (game.state === "lost") {
     gameoverModal.openModal();
     // trigger loss modal
-  } else if (game.state === "win") {
+  } else if (game.state === "won") {
     winModal.openModal();
     //trigger win modal
   }
