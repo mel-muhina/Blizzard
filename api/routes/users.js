@@ -10,6 +10,7 @@ usersRouter.post("/login", usersControllers.login);
 
 usersRouter.use(authenticator);
 
+usersRouter.get("/validate-token", usersControllers.tokenValidation);
 usersRouter.get("/stats", usersControllers.showStats);
 usersRouter.post("/highscore", usersControllers.updateHighscore);
 
