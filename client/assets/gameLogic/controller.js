@@ -1,14 +1,15 @@
 const GameState = require("./logic.js");
 const winModal = require("./view/viewWin.js")
 const gameoverModal = require("./view/viewLost.js")
+const checkAuth = require("./../utils/checkAuth.js");
 const quizOptions = document.querySelectorAll("#table .option ");
 const questionDescription = document.querySelector(".question-description");
 const answersContainer = document.querySelector(".answers");
+const bgContainer = document.querySelector("#bg-container");
+const charContainer = document.querySelector("#char-img");
 
 
 const game = new GameState();
-
-game.init();
 
 answersContainer.addEventListener("click", async function (e) {
   const target = e.target.closest(".option");
@@ -35,8 +36,23 @@ answersContainer.addEventListener("click", async function (e) {
 
 });
 
+const updateImgs = () => {
+  const curEvent = game.event[game.eventIndex]
+  const char_img = curEvent.char_image_url;
+  const bg_img = curEvent.bg_image_url;
+  //  console.log(char_img)
+  //  console.log(first)
+const test = `url(${char_img})`
+console.log("updateimg Teat", test)
+  bgContainer.style.backgroundImage = `url(${bg_img})`;
+  charContainer.style.backgroundImage = `url(${char_img})`;
+  console.log(charContainer)
+};
+
 const updateQuestion = () => {
   const question = game.question;
+
+  updateImgs();
   questionDescription.textContent = question.question_description;
   question.answers.forEach((answer, i) => {
     const thElement = quizOptions[i].querySelector(".option-descrition");
@@ -45,15 +61,9 @@ const updateQuestion = () => {
   });
 };
 
-async function checkAuth() {
-  if (localStorage.getItem("token")) {
-  } else {
-    window.location.assign("./login.html");
-  }
-}
-
 (async function () {
   await checkAuth();
   await game.init();
   updateQuestion();
+  updateImgs();
 })();

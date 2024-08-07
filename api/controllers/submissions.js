@@ -1,7 +1,8 @@
 const Submission = require("../models/Submission");
 
 const show = async (req, res) => {
-  try {const stats = await Submission.getQuestionsStats();
+  try {
+    const stats = await Submission.getQuestionsStats();
     res.status(200).json({ stats });
   } catch (err) {
     res.status(500).json({ error: err.message });

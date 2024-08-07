@@ -9,11 +9,30 @@ body {
 
 /* This is the outer most part of the game that contains all elements */
 .fullcontainer {
-  padding-top: 5%;
+  width: 100%;
+  height: 90vh;
+  padding-top: 0%;
   background-image: url("assets/background1.jpg");
+  background-size: 100%;
+  background-size: cover; 
+  background-repeat: no-repeat;
   background-color: black;
   border-radius: 5px;
   text-align: center;
+  background-position: center;
+  overflow: hidden;
+  position: relative;
+  /* border-radius: 5px; */
+}
+
+#char-img {
+  background-image: url("https://mbwxnezvgzfbldgfkvim.supabase.co/storage/v1/object/sign/images/event3-char%20(1).png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvZXZlbnQzLWNoYXIgKDEpLnBuZyIsImlhdCI6MTcyMzAzOTA0MCwiZXhwIjoxNzU0NTc1MDQwfQ.7Z-f_vPZYU0Ei-aNj_Bq9qOI-oLk1wPzvm28BZnRtOY&t=2024-08-07T13%3A57%3A20.932Z");
+  height: 100vh;
+  background-position: center top;
+  /* background-size: 100% 100%; */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* This is purely the text part of the game */
@@ -31,14 +50,14 @@ body {
 }
 
 #textbox p {
-  padding: 5% 0%;
+  padding: 2% 0%;
   font-weight: 600;
-  font-size: 22px;
+  font-size: 1.2rem;
 }
 
 #textbox tr {
-  font-weight: 500;
-  font-size: 1.2rem;
+  font-weight: 400;
+  font-size: 1.1rem;
 }
 
 #table th {
@@ -61,10 +80,6 @@ body {
 
 /* This affects the character image */
 
-img {
-  height: 100%;
-}
-   
 
 #gameoverModal .modal-content {
     height: 100%;
