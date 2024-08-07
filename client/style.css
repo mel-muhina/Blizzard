@@ -64,3 +64,33 @@ body {
 img {
   height: 100%;
 }
+   
+
+#gameoverModal .modal-content {
+    height: 100%;
+    border-radius: 0;
+    background-color: black;
+}
+
+#gameoverModal .modal-body {
+    overflow-y: auto;
+    color: red;
+}
+
+#winModal .modal-content {
+    height: 100%;
+    border-radius: 0;
+    background-color: white;
+}
+
+#winModal .modal-body {
+    overflow-y: auto;
+    color: red;
+}
+
+
+.modal-fullscreen .modal-header, 
+.modal-fullscreen .modal-footer {
+    border: none
+}
+
