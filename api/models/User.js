@@ -24,7 +24,7 @@ class User {
   }
 
   static async findById(id) {
-    if (!id) throw new Error("Please provide a username");
+    if (!id) throw new Error("Please provide an id");
 
     const query = await db.query("SELECT * FROM users WHERE user_id = $1", [
       id,
@@ -53,30 +53,17 @@ class User {
     return new User(query.rows[0]);
   }
 
-  static async getStats(user_id) {
-    if (!user_id) throw new Error("Please provide a username");
-
-    const query = await db.query("SELECT * FROM users WHERE user_id = $1", [
-      user_id,
-    ]);
-
-    if (query.rows.length !== 1) {
-      throw new Error("Unable to authenticate user");
-    }
-
-    return new User(query.rows[0]);
-  }
-
-  async updateHighscore({ newHighscore, user_id }) {
-    if (!newHighscore) throw new Error("Please provide a highscore");
+  async updateHighscore(newHighscore) {
+    if (!newHighscore || typeof newHighscore !== "number")
+      throw new Error("Please provide a new highscore");
 
     const query = await db.query(
       "UPDATE users SET highscore = $1 WHERE user_id = $2 RETURNING *",
-      [newHighscore, user_id]
+      [newHighscore, this.user_id]
     );
 
     if (query.rows.length !== 1) {
-      throw new Error("Unable to authenticate user");
+      throw new Error("DB did not return an item");
     }
 
     return new User(query.rows[0]);
