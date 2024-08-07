@@ -85,4 +85,12 @@ const updateHighscore = async (req, res) => {
   }
 };
 
-module.exports = { login, signup, showStats, updateHighscore };
+const tokenValidation = (req, res) => {
+  if (req.user) {
+    res.status(200).json({ valid: true });
+  } else {
+    res.status(401).json({ valid: false });
+  }
+};
+
+module.exports = { login, signup, showStats, updateHighscore, tokenValidation };
