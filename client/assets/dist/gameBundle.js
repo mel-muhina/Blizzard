@@ -3,6 +3,9 @@ const GameState = require("./logic.js");
 const quizOptions = document.querySelectorAll("#table .option ");
 const questionDescription = document.querySelector(".question-description");
 const answersContainer = document.querySelector(".answers");
+const bgContainer = document.querySelector("#bg-container");
+const charContainer = document.querySelector("#char-img");
+
 
 const game = new GameState();
 
@@ -22,8 +25,19 @@ answersContainer.addEventListener("click", async function (e) {
   }
 });
 
+const updateImgs = () => {
+  const char_img = game.char_image_url;
+  const bg_img = game.bg_image_url;
+  console.log("char_img")
+  bgContainer.style.backgroundImage = `url(${bg_img})`;
+  charContainer.style.backgroundImage = `url(${char_img})`;
+
+};
+
 const updateQuestion = () => {
   const question = game.question;
+ 
+  updateImgs()
   questionDescription.textContent = question.question_description;
   question.answers.forEach((answer, i) => {
     const thElement = quizOptions[i].querySelector(".option-descrition");
@@ -31,6 +45,8 @@ const updateQuestion = () => {
     quizOptions[i].dataset.answerId = answer.answer_id;
   });
 };
+
+
 
 async function checkAuth() {
   if (localStorage.getItem("token")) {
@@ -43,6 +59,8 @@ async function checkAuth() {
   await checkAuth();
   await game.init();
   updateQuestion();
+  
+  
 })();
 
 },{"./logic.js":2}],2:[function(require,module,exports){
@@ -55,6 +73,8 @@ class gameState {
     this.lives = 3;
     this.event = [];
     this.eventIndex = 0;
+    this.char_image_url = {};
+    this.bg_image_url = {};
   }
 
   //   static async fetchForUser() {
@@ -97,9 +117,15 @@ class gameState {
       const response = await fetch(
         `https://blizzard-5jur.onrender.com/events/${id}`
       );
+
       if (response.ok) {
         const data = await response.json();
+        const charImg = data[0].char_image_url
+        const bgImg = data[0].bg_image_url
+
         this.event = data;
+        this.char_image_url = charImg;
+        this.bg_image_url = bgImg;
       } else {
         throw new Error("Error: " + response.status);
       }
