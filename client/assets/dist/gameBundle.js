@@ -27,9 +27,13 @@ const updateImgs = () => {
   const curEvent = game.event[game.eventIndex]
   const char_img = curEvent.char_image_url;
   const bg_img = curEvent.bg_image_url;
-
+  //  console.log(char_img)
+  //  console.log(first)
+const test = `url(${char_img})`
+console.log("updateimg Teat", test)
   bgContainer.style.backgroundImage = `url(${bg_img})`;
   charContainer.style.backgroundImage = `url(${char_img})`;
+  console.log(charContainer)
 };
 
 const updateQuestion = () => {
@@ -48,6 +52,7 @@ const updateQuestion = () => {
   await checkAuth();
   await game.init();
   updateQuestion();
+  updateImgs();
 })();
 
 },{"./../utils/checkAuth.js":3,"./logic.js":2}],2:[function(require,module,exports){
