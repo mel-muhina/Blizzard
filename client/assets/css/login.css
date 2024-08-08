@@ -67,7 +67,7 @@ input[type="password"] {
 button {
   width: 100%;
   padding: 10px;
-  background: linear-gradient(135deg, rgba(255, 225, 0, 1), rgba(255, 4, 0, 1));
+  background: linear-gradient(135deg, rgba(255, 135, 0, 1), rgb(255, 60, 57));
   color: white;
   font-weight: 600;
   border: none;
@@ -79,7 +79,7 @@ button {
 }
 
 button:hover {
-  background: rgba(255, 135, 0, 1);
+  background: rgb(179, 16, 16);
   /* transition: background 0.3s ease; */
   /* background: linear-gradient(
     135deg,

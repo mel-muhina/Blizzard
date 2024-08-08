@@ -29,7 +29,9 @@ header {
 }
 
 button {
-    background-color: rgb(255, 81, 0) !important;
+    background-color: rgba(255, 135, 0, 1) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: none !important;
     padding: 2% 20% !important;
 }
 
