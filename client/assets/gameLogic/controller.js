@@ -18,19 +18,7 @@ answersContainer.addEventListener("click", async function (e) {
   await game.sendSubmission(result);
   // Display answer modal
   //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
-
-  game.checkGameState();
-
-  if (game.state === "running") {
-    await game.fetchNextQuestion();
-    updateQuestion();
-  } else if (game.state === "lost") {
-    gameoverModal.openModal();
-    // trigger loss modal
-  } else if (game.state === "won") {
-    winModal.openModal();
-    //trigger win modal
-  }
+  console.log(game);
 });
 
 const updateImgs = () => {
