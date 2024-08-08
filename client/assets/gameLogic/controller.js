@@ -83,4 +83,6 @@ const readSeachParams = () => {
   answerModal.closeModalEvent(progressGame);
   updateQuestion();
   updateImgs();
+
+  document.querySelector(".loader-background").remove();
 })();

@@ -84,6 +84,8 @@ const readSeachParams = () => {
   answerModal.closeModalEvent(progressGame);
   updateQuestion();
   updateImgs();
+
+  document.querySelector(".loader-background").remove();
 })();
 
 },{"./../utils/checkAuth.js":6,"./logic.js":2,"./view/viewAnswer.js":3,"./view/viewLost.js":4,"./view/viewWin.js":5}],2:[function(require,module,exports){
@@ -307,7 +309,7 @@ function updateAnswer({ game, outcome }) {
 
   console.log(correctAnswerText);
   title.textContent = outcome ? "Correct answer" : "Wrong answer";
-  title.classList.add(outcome ? "title-correct" : "title-wrong");
+  title.id = outcome ? "title-correct" : "title-wrong";
 
   lives.textContent = `Lives remaining: ${game.lives}`;
   correctAnswerEl.textContent = correctAnswerText.answer_text;

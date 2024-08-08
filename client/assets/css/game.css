@@ -7,6 +7,38 @@ body {
   align-items: center;
 }
 
+.loader-background {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  z-index: 100000;
+}
+
+.spinner {
+  width: 100px;
+  padding: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: red; /* CHANGE SPINNER COLOR*/
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: s3 1s infinite linear;
+}
+@keyframes s3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 /* This is the outer most part of the game that contains all elements */
 .fullcontainer {
   width: 100%;
@@ -84,23 +116,22 @@ body {
 /* You have lost modal */
 
 #gameoverModal .modal-content {
-
   height: 100%;
   border-radius: 0;
   background-color: black;
-  background:  url("../images/losebg.jpg");
+  background: url("../images/losebg.jpg");
   background-position: center;
   background-size: contain;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   text-align: center;
-  }
+}
 
 .tryagain {
   color: aliceblue;
   font-family: "Lato", sans-serif;
-  font-size: 1.4rem;;
+  font-size: 1.4rem;
   background: rgb(179, 16, 16);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: background 0.3s ease;
@@ -109,15 +140,14 @@ body {
   font-weight: 600;
   padding: 1.5% 5%;
   border-radius: 10px;
-
 }
 
 .tryagain:hover {
-    background: rgb(110, 0, 0);
-
+  background: rgb(110, 0, 0);
 }
 
-#gameoverModal .modal-body h4, p {
+#gameoverModal .modal-body h4,
+p {
   padding-bottom: 5%;
 }
 
@@ -131,7 +161,7 @@ body {
 
 #gameoverModal .modal-body p {
   color: white;
- text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
   font-family: "Lato", sans-serif;
   font-size: 2rem;
   font-weight: 600;
@@ -141,7 +171,6 @@ body {
   padding: 2%;
   overflow-y: auto;
   /* color: red; */
-  
 }
 
 /* You have won modal */
@@ -150,7 +179,7 @@ body {
   height: 100%;
   border-radius: 0;
   background-color: black;
-  background:  url("../images/winbg.jpg");
+  background: url("../images/winbg.jpg");
   background-position: center;
   background-size: cover;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -162,7 +191,7 @@ body {
 .playagain {
   color: aliceblue;
   font-family: "Lato", sans-serif;
-  font-size: 1.4rem;;
+  font-size: 1.4rem;
   background: rgba(255, 135, 0, 1);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: background 0.3s ease;
@@ -175,11 +204,10 @@ body {
 
 .playagain:hover {
   background: rgb(179, 16, 16);
-
 }
 
-
-#winModal .modal-body h4, p {
+#winModal .modal-body h4,
+p {
   padding-bottom: 5%;
 }
 
@@ -193,12 +221,11 @@ body {
 
 #winModal .modal-body p {
   color: white;
- text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
   font-family: "Lato", sans-serif;
   font-size: 2rem;
   font-weight: 600;
 }
-
 
 #winModal .modal-body {
   width: 50%;
@@ -241,11 +268,9 @@ body {
 .lives {
   display: flex;
   flex-direction: row;
- 
 }
 
-
-.lives-heart{
+.lives-heart {
   background: url("../images/heart.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -258,9 +283,19 @@ body {
 }
 
 .answer_description {
+<<<<<<< HEAD
 font-family: "Lato", sans-serif;
  font-size: 1.2rem;
  text-align: center;
 padding: 1%;
 }
 
+=======
+  font-family: "Lato", sans-serif;
+  font-size: 1.2rem;
+}
+
+.answerLabel {
+  font-size: 1.5rem;
+}
+>>>>>>> f58e497a0154dace4d64e2a925d812e2419bb979
