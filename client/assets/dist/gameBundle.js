@@ -84,6 +84,8 @@ const readSeachParams = () => {
   answerModal.closeModalEvent(progressGame);
   updateQuestion();
   updateImgs();
+
+  document.querySelector(".loader-background").remove();
 })();
 
 },{"./../utils/checkAuth.js":6,"./logic.js":2,"./view/viewAnswer.js":3,"./view/viewLost.js":4,"./view/viewWin.js":5}],2:[function(require,module,exports){
