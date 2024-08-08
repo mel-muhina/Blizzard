@@ -37,7 +37,7 @@ describe("Game API endpoints", () => {
       await resetTestDB();
     });
 
-    it("Responds GET / with a 200 cide", async () => {
+    it("Responds GET / with a 200 code of an Array", async () => {
       const response = await request(api).get("/characters/");
 
       expect(response.statusCode).toBe(200);
@@ -45,18 +45,41 @@ describe("Game API endpoints", () => {
       expect(response.body).toBeInstanceOf(Array);
     });
 
-    it("GET /:id", async () => {
+    it("GET /:id with a 200 code with Julius Ceasers character", async () => {
       const response = await request(api).get("/characters/1");
 
       expect(response.statusCode).toBe(200);
       expect(response.body).toHaveProperty("character_name", "Julius Caesar");
     });
 
-    it("GET /:id", async () => {
-      const response = await request(api).get("/characters/1");
+    it("GET /:id responds with 404 when no character is found", async () => {
+      const response = await request(api).get("/characters/4");
 
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty("character_name", "Julius Caesar");
+      expect(response.statusCode).toBe(404);
+      expect(response.body).toHaveProperty(
+        "error",
+        "Unable to locate chosen character."
+      );
+    });
+  });
+
+  describe("/questions", () => {
+    beforeEach(async () => {
+      await resetTestDB();
+    });
+
+    it("responds to GET /questions with question with the id", async () => {
+      const response = await request(api).get("/questions/1");
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("question_id", 1);
+    });
+
+    it("responds to GET /questions with a 404", async () => {
+      const response = await request(api).get("/questions/5");
+
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty("error", "Unable to find question");
     });
   });
 });
