@@ -31,7 +31,7 @@ class Question {
 
   async getAnswers() {
     const answers = await db.query(
-      "SELECT answers , answer_id FROM answers WHERE question_id = $1",
+      "SELECT * FROM answers WHERE question_id = $1",
       [this.question_id]
     );
 
