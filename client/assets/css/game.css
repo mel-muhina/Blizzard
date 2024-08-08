@@ -245,6 +245,12 @@ p {
   font-size: 2rem;
   text-align: center;
   font-weight: 700;
+  padding: 0;
+ 
+}
+
+#answerModal .modal-body {
+  padding: 0 5%;
 }
 
 #title_correct {
@@ -267,28 +273,37 @@ p {
 }
 
 .lives {
-  display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
+  text-align: center; 
 }
+
 .lives_text {
   padding: 0;
+  text-align: center;
 }
 
 .lives_heart {
-  background: url("../images/heart.png");
-  background-position: center;
-  background-repeat: no-repeat;
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  width: 10vh;
+  height: 10vh;
+  background-image: url("../images/heart.png");
+  margin: 0 auto;
+  padding: 0px;
   background-size: contain;
 }
 
 .correct_answer {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-align: center;
 }
 
 .answer_description {
   font-family: "Lato", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-align: center;
   padding: 0%;
 }
