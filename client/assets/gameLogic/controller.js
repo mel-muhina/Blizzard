@@ -19,12 +19,17 @@ answersContainer.addEventListener("click", async function (e) {
   await game.sendSubmission(result);
   // Display answer modal
   answerModal.openModal();
+  await game.fetchNextQuestion();
   //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
 
+  
+});
+
+const progressGame = async () => {
   game.checkGameState();
 
   if (game.state === "running") {
-    await game.fetchNextQuestion();
+    
     
     updateQuestion();
   } else if (game.state === "lost") {
@@ -34,7 +39,7 @@ answersContainer.addEventListener("click", async function (e) {
     winModal.openModal();
     //trigger win modal
   }
-});
+}
 
 const updateImgs = () => {
   const curEvent = game.event[game.eventIndex];
@@ -81,6 +86,7 @@ const readSeachParams = () => {
   await checkAuth();
   const characterId = readSeachParams();
   await game.init(characterId);
+  answerModal.closeModalEvent(progressGame)
   updateQuestion();
   updateImgs();
 })();

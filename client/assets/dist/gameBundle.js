@@ -2,6 +2,7 @@
 const GameState = require("./logic.js");
 const winModal = require("./view/viewWin.js");
 const gameoverModal = require("./view/viewLost.js");
+const answerModal = require("./view/viewAnswer.js")
 const checkAuth = require("./../utils/checkAuth.js");
 const quizOptions = document.querySelectorAll("#table .option ");
 const questionDescription = document.querySelector(".question-description");
@@ -18,12 +19,19 @@ answersContainer.addEventListener("click", async function (e) {
   const result = await game.checkForAnswers(parseInt(target.dataset.answerId));
   await game.sendSubmission(result);
   // Display answer modal
+  answerModal.openModal();
+  await game.fetchNextQuestion();
   //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
 
+  
+});
+
+const progressGame = async () => {
   game.checkGameState();
 
   if (game.state === "running") {
-    await game.fetchNextQuestion();
+    
+    
     updateQuestion();
   } else if (game.state === "lost") {
     gameoverModal.openModal();
@@ -32,7 +40,7 @@ answersContainer.addEventListener("click", async function (e) {
     winModal.openModal();
     //trigger win modal
   }
-});
+}
 
 const updateImgs = () => {
   const curEvent = game.event[game.eventIndex];
@@ -75,14 +83,16 @@ const readSeachParams = () => {
 };
 
 (async function () {
+  
   await checkAuth();
   const characterId = readSeachParams();
   await game.init(characterId);
+  answerModal.closeModalEvent(progressGame)
   updateQuestion();
   updateImgs();
 })();
 
-},{"./../utils/checkAuth.js":5,"./logic.js":2,"./view/viewLost.js":3,"./view/viewWin.js":4}],2:[function(require,module,exports){
+},{"./../utils/checkAuth.js":6,"./logic.js":2,"./view/viewAnswer.js":3,"./view/viewLost.js":4,"./view/viewWin.js":5}],2:[function(require,module,exports){
 class gameState {
   constructor() {
     this.user_highscore = 0;
@@ -279,6 +289,26 @@ module.exports = gameState;
 
 },{}],3:[function(require,module,exports){
 const { Modal } = require("bootstrap")
+const answerModal = document.querySelector("#answerModal")
+const modal = new Modal(answerModal)
+
+function openModal() {
+    console.log("test 1 2 1 2")
+modal.show()
+}
+
+function closeModalEvent(handler) {
+    console.log(modal)
+    console.log("707s")
+    answerModal.addEventListener("hide.bs.modal", async () => 
+    {
+        await handler()
+    })
+}
+
+module.exports = {openModal, closeModalEvent}
+},{"bootstrap":8}],4:[function(require,module,exports){
+const { Modal } = require("bootstrap")
 const gameoverModal = document.querySelector("#gameoverModal")
 const modal = new Modal(gameoverModal)
 
@@ -288,7 +318,7 @@ modal.show()
 }
 
 module.exports = {openModal}
-},{"bootstrap":7}],4:[function(require,module,exports){
+},{"bootstrap":8}],5:[function(require,module,exports){
 const { Modal } = require("bootstrap")
 const winModal = document.querySelector("#winModal")
 const modal = new Modal(winModal)
@@ -299,7 +329,7 @@ modal.show()
 }
 
 module.exports = {openModal}
-},{"bootstrap":7}],5:[function(require,module,exports){
+},{"bootstrap":8}],6:[function(require,module,exports){
 async function checkAuth() {
   const options = {
     method: "GET",
@@ -319,7 +349,7 @@ async function checkAuth() {
 
 module.exports = checkAuth;
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * @popperjs/core v2.11.8 - MIT License
  */
@@ -2140,7 +2170,7 @@ exports.popperOffsets = popperOffsets$1;
 exports.preventOverflow = preventOverflow$1;
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /*!
   * Bootstrap v5.3.3 (https://getbootstrap.com/)
   * Copyright 2011-2024 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
@@ -6636,4 +6666,4 @@ exports.preventOverflow = preventOverflow$1;
 }));
 
 
-},{"@popperjs/core":6}]},{},[1]);
+},{"@popperjs/core":7}]},{},[1]);

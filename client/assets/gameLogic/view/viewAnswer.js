@@ -7,4 +7,13 @@ function openModal() {
 modal.show()
 }
 
-module.exports = {openModal}
+function closeModalEvent(handler) {
+    console.log(modal)
+    console.log("707s")
+    answerModal.addEventListener("hide.bs.modal", async () => 
+    {
+        await handler()
+    })
+}
+
+module.exports = {openModal, closeModalEvent}
