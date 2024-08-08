@@ -210,3 +210,25 @@ body {
 .modal-fullscreen .modal-footer {
   border: none;
 }
+
+/*  Answer description and win point or lose point modal */
+
+.title_correct {
+  font-size: 1.4rem;
+}
+
+.title_wrong {
+  font-size: 1.4rem;
+}
+
+.lives {
+  background: url("../images/heart.png");
+}
+
+.correct_answer {
+  
+}
+
+.answer_description {
+
+}
