@@ -101,12 +101,45 @@ class gameState {
     }
   }
 
+  async checkForHighScore() {
+    if (this.score > this.user_highscore) {
+      await this.sendHighscore();
+    } else {
+    }
+  }
+
   async fetchNextQuestion() {
     if (this.eventIndex >= this.event.length) {
       return -1;
     } else {
       await this.fetchForQuestions(this.event[this.eventIndex].event_id);
       return this.question;
+    }
+  }
+
+  async sendHighscore() {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          highscore: this.score,
+        }),
+      };
+
+      const response = await fetch(
+        "https://blizzard-5jur.onrender.com/users/highscore",
+        options
+      );
+
+      if (!response.ok) {
+        throw new Error("Error Submitting the new highscore");
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 
