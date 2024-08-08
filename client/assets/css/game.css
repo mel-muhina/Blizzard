@@ -217,16 +217,25 @@ body {
   font-family: "Libre Baskerville", serif;
   font-size: 2rem;
   text-align: center;
-  color: rgb(179, 16, 16);
+
   font-weight: 700;
 }
 
-.title_correct {
+#title_correct {
   font-size: 1.4rem;
+  color: rgb(0, 255, 42);
 }
 
-.title_wrong {
-  font-size: 1.6rem;
+.answer, .explanation {
+  font-size: 1.4rem;
+  padding-bottom: 1%;
+  text-align: center;
+  font-weight: 700;
+}
+
+#title_wrong {
+  font-size: 1.4rem;
+  color: rgb(179, 16, 16);
 }
 
 .lives {
@@ -245,13 +254,13 @@ body {
 
 .correct_answer {
   font-size: 1.2rem;
+  text-align: center;
 }
 
 .answer_description {
 font-family: "Lato", sans-serif;
  font-size: 1.2rem;
+ text-align: center;
+padding: 1%;
 }
 
-.answerLabel {
-  font-size: 1.5rem;
-}
