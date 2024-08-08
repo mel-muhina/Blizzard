@@ -65,8 +65,8 @@ CREATE TABLE submission (
 INSERT INTO characters (character_name, birth_year, image_url) 
 VALUES
 ('Julius Caesar', '100 BC', 'https://mbwxnezvgzfbldgfkvim.supabase.co/storage/v1/object/sign/images/miniceaser.jpeg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvbWluaWNlYXNlci5qcGVnIiwiaWF0IjoxNzIzMTAzNzA4LCJleHAiOjE3NTQ2Mzk3MDh9.p3wVzzZzh7iefsnskShusYNviuDktpyIG73ocIqI2bM&t=2024-08-08T07%3A55%3A08.548Z'),
-('Cleopatra', '69 BC', ''),
-('Alexander the great', '356 BC', ''),
+('Cleopatra', '69 BC', 'https://mbwxnezvgzfbldgfkvim.supabase.co/storage/v1/object/sign/images/minicleo.jpeg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvbWluaWNsZW8uanBlZyIsImlhdCI6MTcyMzEyMjk4MiwiZXhwIjoxNzU0NjU4OTgyfQ.9qoKz4qTdMUgksESTtuj76z7_mSK1U97sh5RdGFIDbQ&t=2024-08-08T13%3A16%3A22.703Z'),
+('Alexander the Great', '356 BC', 'https://mbwxnezvgzfbldgfkvim.supabase.co/storage/v1/object/sign/images/minialex.jpeg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvbWluaWFsZXguanBlZyIsImlhdCI6MTcyMzEyMjk2NiwiZXhwIjoxNzU0NjU4OTY2fQ.BVPlo-u68tBudUVQehDF1KKIXZtcUt3pHSsghfa8TEs&t=2024-08-08T13%3A16%3A06.389Z'),
 ('Placeholder', '', '');
 
 INSERT INTO events (character_id, event_date, bg_image_url, char_image_url) 
