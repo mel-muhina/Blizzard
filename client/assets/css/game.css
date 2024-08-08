@@ -270,6 +270,9 @@ p {
   display: flex;
   flex-direction: row;
 }
+.lives_text {
+  padding: 0;
+}
 
 .lives_heart {
   background: url("../images/heart.png");

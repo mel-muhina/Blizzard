@@ -326,27 +326,37 @@ function updateAnswer({ game, outcome }) {
 module.exports = { openModal, closeModalEvent, updateAnswer };
 
 },{"bootstrap":8}],4:[function(require,module,exports){
-const { Modal } = require("bootstrap")
-const gameoverModal = document.querySelector("#gameoverModal")
-const modal = new Modal(gameoverModal)
+const { Modal } = require("bootstrap");
+const gameoverModal = document.querySelector("#gameoverModal");
+const modal = new Modal(gameoverModal);
+
+gameoverModal.addEventListener("hide.bs.modal", (e) => {
+  e.preventDefault();
+});
 
 function openModal() {
-    console.log("test 1 2 1 2")
-modal.show()
+  console.log("test 1 2 1 2");
+  modal.show();
 }
 
-module.exports = {openModal}
+module.exports = { openModal };
+
 },{"bootstrap":8}],5:[function(require,module,exports){
-const { Modal } = require("bootstrap")
-const winModal = document.querySelector("#winModal")
-const modal = new Modal(winModal)
+const { Modal } = require("bootstrap");
+const winModal = document.querySelector("#winModal");
+const modal = new Modal(winModal);
+
+winModal.addEventListener("hide.bs.modal", (e) => {
+  e.preventDefault();
+});
 
 function openModal() {
-    console.log("test 1 2 1 2")
-modal.show()
+  console.log("test 1 2 1 2");
+  modal.show();
 }
 
-module.exports = {openModal}
+module.exports = { openModal };
+
 },{"bootstrap":8}],6:[function(require,module,exports){
 async function checkAuth() {
   const options = {
