@@ -21,6 +21,7 @@ answersContainer.addEventListener("click", async function (e) {
   answerModal.openModal();
   await game.fetchNextQuestion();
   //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
+
 });
 
 const progressGame = async () => {
@@ -36,6 +37,7 @@ const progressGame = async () => {
     //trigger win modal
   }
 };
+
 
 const updateImgs = () => {
   const curEvent = game.event[game.eventIndex];
