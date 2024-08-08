@@ -19,6 +19,7 @@ answersContainer.addEventListener("click", async function (e) {
   const result = await game.checkForAnswers(parseInt(target.dataset.answerId));
   await game.sendSubmission(result);
   // Display answer modal
+  console.log(game)
   answerModal.openModal();
   await game.fetchNextQuestion();
   //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
