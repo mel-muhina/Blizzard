@@ -17,11 +17,16 @@ function updateAnswer({ game, outcome }) {
   const lives = document.querySelector(".lives");
   const correctAnswerEl = document.querySelector(".correct_answer");
   const answerDescription = document.querySelector(".answer_description");
+  const correctAnswerText = game.question.answers.find(
+    (ans) => ans.answer_id === game.question.answer_id
+  );
 
+  console.log(correctAnswerText);
   title.textContent = outcome ? "Correct answer" : "Wrong answer";
   title.classList.add(outcome ? "title-correct" : "title-wrong");
 
   lives.textContent = `Lives remaining: ${game.lives}`;
+  correctAnswerEl.textContent = correctAnswerText.answer_text;
   answerDescription.textContent = game.question.answer_description;
 }
 
