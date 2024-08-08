@@ -280,3 +280,7 @@ p {
 .answerLabel {
   font-size: 1.5rem;
 }
+
+#title-correct {
+  background-color: red;
+}
