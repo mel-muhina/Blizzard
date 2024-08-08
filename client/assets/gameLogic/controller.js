@@ -1,7 +1,7 @@
 const GameState = require("./logic.js");
 const winModal = require("./view/viewWin.js");
 const gameoverModal = require("./view/viewLost.js");
-const answerModal = require("./view/viewAnswer.js")
+const answerModal = require("./view/viewAnswer.js");
 const checkAuth = require("./../utils/checkAuth.js");
 const quizOptions = document.querySelectorAll("#table .option ");
 const questionDescription = document.querySelector(".question-description");
@@ -17,20 +17,16 @@ answersContainer.addEventListener("click", async function (e) {
   const result = await game.checkForAnswers(parseInt(target.dataset.answerId));
   await game.sendSubmission(result);
   // Display answer modal
-  console.log(game)
-  answerModal.updateAnswer(game)
+  answerModal.updateAnswer({ game, outcome: result });
   answerModal.openModal();
   await game.fetchNextQuestion();
   //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
-  
 });
 
 const progressGame = async () => {
   game.checkGameState();
 
   if (game.state === "running") {
-    
-    
     updateQuestion();
   } else if (game.state === "lost") {
     gameoverModal.openModal();
@@ -39,7 +35,7 @@ const progressGame = async () => {
     winModal.openModal();
     //trigger win modal
   }
-}
+};
 
 const updateImgs = () => {
   const curEvent = game.event[game.eventIndex];
@@ -81,11 +77,10 @@ const readSeachParams = () => {
 };
 
 (async function () {
-  
   await checkAuth();
   const characterId = readSeachParams();
   await game.init(characterId);
-  answerModal.closeModalEvent(progressGame)
+  answerModal.closeModalEvent(progressGame);
   updateQuestion();
   updateImgs();
 })();

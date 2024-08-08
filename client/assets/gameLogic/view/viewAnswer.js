@@ -1,41 +1,28 @@
-const { Modal } = require("bootstrap")
-const answerModal = document.querySelector("#answerModal")
-const modal = new Modal(answerModal)
+const { Modal } = require("bootstrap");
+const answerModal = document.querySelector("#answerModal");
+const modal = new Modal(answerModal);
 
 function openModal() {
-    console.log("test 1 2 1 2")
-modal.show()
+  modal.show();
 }
 
 function closeModalEvent(handler) {
-    console.log(modal)
-    console.log("707s")
-    answerModal.addEventListener("hide.bs.modal", async () => 
-    {
-        await handler()
-    })
+  answerModal.addEventListener("hide.bs.modal", async () => {
+    await handler();
+  });
 }
 
-function updateAnswer(game)
-{
-    console.log(game.question.answer_id)
+function updateAnswer({ game, outcome }) {
+  const title = answerModal.querySelector("#answerModal .modal-body h6");
+  const lives = document.querySelector(".lives");
+  const correctAnswerEl = document.querySelector(".correct_answer");
+  const answerDescription = document.querySelector(".answer_description");
 
-    const answer_index = parseInt(game.question.answer_id);
-    const answer_right = game.question.answers[{answer_index}];
-    
-    const answer_description = game.question.answer_description;
+  title.textContent = outcome ? "Correct answer" : "Wrong answer";
+  title.classList.add(outcome ? "title-correct" : "title-wrong");
 
-    const headerElement = answerModal.querySelector("h6")
-    const answerElement = answerModal.querySelector("p")
-
-     if(headerElement) {
-         headerElement.textContent = answer_right
-     }
-
-    if(answerElement) {
-        answerElement.textContent = answer_description
-    }
-
+  lives.textContent = `Lives remaining: ${game.lives}`;
+  answerDescription.textContent = game.question.answer_description;
 }
 
-module.exports = {openModal, closeModalEvent, updateAnswer}
+module.exports = { openModal, closeModalEvent, updateAnswer };
