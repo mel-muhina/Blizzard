@@ -41,13 +41,24 @@ h1 {
     
 }
 
+.instructions {
+    font-family: "Lato", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    text-shadow: 0px 0px 0px;
+    padding: 1%;;
+}
+
+
 #instructionsLabel .modal-content {
+ 
     height: 100%;
     border-radius: 0;
     background-color: black;
 }
 
 #instructionsLabel .modal-body {
+    
     overflow-y: auto;
     color: red;
 }
