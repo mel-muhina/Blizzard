@@ -14,18 +14,25 @@ function closeModalEvent(handler) {
 
 function updateAnswer({ game, outcome }) {
   const title = answerModal.querySelector("#answerModal .modal-body h6");
-  const lives = document.querySelector(".lives");
+  const livesEl = document.querySelector(".lives");
   const correctAnswerEl = document.querySelector(".correct_answer");
   const answerDescription = document.querySelector(".answer_description");
   const correctAnswerText = game.question.answers.find(
     (ans) => ans.answer_id === game.question.answer_id
   );
 
-  console.log(correctAnswerText);
   title.textContent = outcome ? "Correct answer" : "Wrong answer";
   title.id = outcome ? "title_correct" : "title_wrong";
 
-  lives.textContent = `Lives remaining: ${game.lives}`;
+  //   livesEl.textContent = `Lives remaining: ${game.lives}`;
+
+  livesEl.innerHTML = "";
+  for (let i = 0; i < game.lives; i++) {
+    const span = document.createElement("span");
+    span.classList.add("lives_heart");
+    livesEl.appendChild(span);
+  }
+
   correctAnswerEl.textContent = correctAnswerText.answer_text;
   answerDescription.textContent = game.question.answer_description;
 }
