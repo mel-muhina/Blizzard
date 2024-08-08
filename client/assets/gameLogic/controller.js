@@ -13,16 +13,15 @@ const game = new GameState();
 
 answersContainer.addEventListener("click", async function (e) {
   const target = e.target.closest(".option");
-
   if (!target) return;
   const result = await game.checkForAnswers(parseInt(target.dataset.answerId));
   await game.sendSubmission(result);
   // Display answer modal
   console.log(game)
+  answerModal.updateAnswer(game)
   answerModal.openModal();
   await game.fetchNextQuestion();
   //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
-
   
 });
 
@@ -46,7 +45,6 @@ const updateImgs = () => {
   const curEvent = game.event[game.eventIndex];
   const char_img = curEvent.char_image_url;
   const bg_img = curEvent.bg_image_url;
-
   bgContainer.style.backgroundImage = `url(${bg_img})`;
   charContainer.style.backgroundImage = `url(${char_img})`;
 };
@@ -58,7 +56,6 @@ const updateQuestion = () => {
   questionDescription.textContent = question.question_description;
   question.answers.forEach((answer, i) => {
     const thElement = quizOptions[i].querySelector(".option-descrition");
-    console.log(answer);
     thElement.innerHTML = answer.answer_text;
     quizOptions[i].dataset.answerId = answer.answer_id;
   });
