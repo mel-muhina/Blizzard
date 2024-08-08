@@ -21,7 +21,6 @@ answersContainer.addEventListener("click", async function (e) {
 
   game.checkGameState();
 
-  console.log(game.state, game.lives);
   if (game.state === "running") {
     await game.fetchNextQuestion();
     updateQuestion();
