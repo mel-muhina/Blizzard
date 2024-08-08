@@ -1,4 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+<<<<<<< HEAD
 const GameState = require("./logic.js");
 const winModal = require("./view/viewWin.js");
 const gameoverModal = require("./view/viewLost.js");
@@ -329,6 +330,289 @@ module.exports = { openModal, closeModalEvent, updateAnswer };
 
 },{"bootstrap":8}],4:[function(require,module,exports){
 const { Modal } = require("bootstrap");
+=======
+const GameState = require("./logic.js");
+const winModal = require("./view/viewWin.js");
+const gameoverModal = require("./view/viewLost.js");
+const checkAuth = require("./../utils/checkAuth.js");
+const quizOptions = document.querySelectorAll("#table .option ");
+const questionDescription = document.querySelector(".question-description");
+const answersContainer = document.querySelector(".answers");
+const bgContainer = document.querySelector("#bg-container");
+const charContainer = document.querySelector("#char-img");
+
+const game = new GameState();
+
+answersContainer.addEventListener("click", async function (e) {
+  const target = e.target.closest(".option");
+
+  if (!target) return;
+  const result = await game.checkForAnswers(parseInt(target.dataset.answerId));
+  await game.sendSubmission(result);
+  // Display answer modal
+  //check game state -  if == running then fetchnextquestion, if == loss then show loss modal and if finished events then show win modal
+
+  game.checkGameState();
+
+  if (game.state === "running") {
+    await game.fetchNextQuestion();
+    updateQuestion();
+  } else if (game.state === "lost") {
+    gameoverModal.openModal();
+    // trigger loss modal
+  } else if (game.state === "won") {
+    winModal.openModal();
+    //trigger win modal
+  }
+});
+
+const updateImgs = () => {
+  const curEvent = game.event[game.eventIndex];
+  const char_img = curEvent.char_image_url;
+  const bg_img = curEvent.bg_image_url;
+
+  bgContainer.style.backgroundImage = `url(${bg_img})`;
+  charContainer.style.backgroundImage = `url(${char_img})`;
+};
+
+const updateQuestion = () => {
+  const question = game.question;
+
+  updateImgs();
+  questionDescription.textContent = question.question_description;
+  question.answers.forEach((answer, i) => {
+    const thElement = quizOptions[i].querySelector(".option-descrition");
+    console.log(answer);
+    thElement.innerHTML = answer.answer_text;
+    quizOptions[i].dataset.answerId = answer.answer_id;
+  });
+};
+
+const readSeachParams = () => {
+  // Get the current URL
+  const url = window.location.href;
+
+  // Create a URL object
+  const urlObj = new URL(url);
+
+  // Get the search parameters
+  const searchParams = new URLSearchParams(urlObj.search);
+
+  const characterId = searchParams.get("characterId");
+
+  if (!characterId) {
+    window.location.href = "characters.html";
+  }
+
+  return characterId;
+};
+
+(async function () {
+  await checkAuth();
+  const characterId = readSeachParams();
+  await game.init(characterId);
+  updateQuestion();
+  updateImgs();
+})();
+
+},{"./../utils/checkAuth.js":5,"./logic.js":2,"./view/viewLost.js":3,"./view/viewWin.js":4}],2:[function(require,module,exports){
+class gameState {
+  constructor() {
+    this.user_highscore = 0;
+    this.score = 0;
+    this.question = {};
+    this.character = {};
+    this.lives = 3;
+    this.event = [];
+    this.eventIndex = 0;
+    this.state = "beforeInit";
+  }
+
+  async fetchForUser() {
+    try {
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      };
+
+      const response = await fetch(
+        `https://blizzard-5jur.onrender.com/users/stats`,
+        options
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        this.user_highscore = data.highscore;
+      } else {
+        throw new Error("Error: " + response.status);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async fetchForCharacter(id) {
+    try {
+      const response = await fetch(
+        `https://blizzard-5jur.onrender.com/characters/${id}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        this.character = data;
+      } else {
+        throw new Error("Error: " + response.status);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async fetchForEvents(id) {
+    try {
+      const response = await fetch(
+        `https://blizzard-5jur.onrender.com/events/${id}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        this.event = data;
+      } else {
+        throw new Error("Error: " + response.status);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async fetchForQuestions(id) {
+    try {
+      const response = await fetch(
+        `https://blizzard-5jur.onrender.com/questions/${id}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        this.question = data;
+      } else {
+        throw new Error("Error: " + response.status);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async checkForAnswers(id) {
+    this.eventIndex += 1;
+
+    if (this.question.answer_id === id) {
+      this.score += this.question.score;
+      return true;
+      // this.event.length === this.eventIndex
+    } else {
+      this.lives -= 1;
+      return false;
+    }
+  }
+
+  async checkForHighScore() {
+    if (this.score > this.user_highscore) {
+      await this.sendHighscore();
+    } else {
+    }
+  }
+
+  async fetchNextQuestion() {
+    if (this.eventIndex >= this.event.length) {
+      return -1;
+    } else {
+      await this.fetchForQuestions(this.event[this.eventIndex].event_id);
+      return this.question;
+    }
+  }
+
+  async sendHighscore() {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          highscore: this.score,
+        }),
+      };
+
+      const response = await fetch(
+        "https://blizzard-5jur.onrender.com/users/highscore",
+        options
+      );
+
+      if (!response.ok) {
+        throw new Error("Error Submitting the new highscore");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async sendSubmission(outcome) {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          question_id: this.question.question_id,
+          outcome: outcome,
+        }),
+      };
+
+      const response = await fetch(
+        "https://blizzard-5jur.onrender.com/submissions/",
+        options
+      );
+
+      if (!response.ok) {
+        throw new Error("Error submitting the answer");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  checkGameState() {
+    if (this.lives == 0) {
+      this.state = "lost";
+      return;
+    }
+    if (this.eventIndex >= this.event.length) {
+      this.state = "won";
+      return;
+    }
+  }
+
+  async init(characterId) {
+    await this.fetchForUser();
+    await this.fetchForCharacter(characterId);
+    await this.fetchForEvents(this.character.character_id);
+    await this.fetchForQuestions(this.event[this.eventIndex].event_id);
+    this.state = "running";
+  }
+}
+
+module.exports = gameState;
+
+},{}],3:[function(require,module,exports){
+const { Modal } = require("bootstrap");
+>>>>>>> e5ab7ac72bb0a9a368eb35d1d223b73a3c321685
 const gameoverModal = document.querySelector("#gameoverModal");
 const modal = new Modal(gameoverModal);
 
@@ -343,7 +627,11 @@ function openModal() {
 
 module.exports = { openModal };
 
+<<<<<<< HEAD
 },{"bootstrap":8}],5:[function(require,module,exports){
+=======
+},{"bootstrap":7}],4:[function(require,module,exports){
+>>>>>>> e5ab7ac72bb0a9a368eb35d1d223b73a3c321685
 const { Modal } = require("bootstrap");
 const winModal = document.querySelector("#winModal");
 const modal = new Modal(winModal);
@@ -359,6 +647,7 @@ function openModal() {
 
 module.exports = { openModal };
 
+<<<<<<< HEAD
 },{"bootstrap":8}],6:[function(require,module,exports){
 async function checkAuth() {
   const options = {
@@ -380,6 +669,29 @@ async function checkAuth() {
 module.exports = checkAuth;
 
 },{}],7:[function(require,module,exports){
+=======
+},{"bootstrap":7}],5:[function(require,module,exports){
+async function checkAuth() {
+  const options = {
+    method: "GET",
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  };
+  const response = await fetch(
+    "https://blizzard-5jur.onrender.com/users/validate-token",
+    options
+  );
+
+  if (response.status !== 200) {
+    window.location.href = "login.html";
+  }
+}
+
+module.exports = checkAuth;
+
+},{}],6:[function(require,module,exports){
+>>>>>>> e5ab7ac72bb0a9a368eb35d1d223b73a3c321685
 /**
  * @popperjs/core v2.11.8 - MIT License
  */
@@ -2200,7 +2512,11 @@ exports.popperOffsets = popperOffsets$1;
 exports.preventOverflow = preventOverflow$1;
 
 
+<<<<<<< HEAD
 },{}],8:[function(require,module,exports){
+=======
+},{}],7:[function(require,module,exports){
+>>>>>>> e5ab7ac72bb0a9a368eb35d1d223b73a3c321685
 /*!
   * Bootstrap v5.3.3 (https://getbootstrap.com/)
   * Copyright 2011-2024 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
@@ -6696,4 +7012,8 @@ exports.preventOverflow = preventOverflow$1;
 }));
 
 
+<<<<<<< HEAD
 },{"@popperjs/core":7}]},{},[1]);
+=======
+},{"@popperjs/core":6}]},{},[1]);
+>>>>>>> e5ab7ac72bb0a9a368eb35d1d223b73a3c321685
