@@ -1,5 +1,5 @@
-const API_URL = "http://127.0.0.1:3000";
-// const API_URL = "https://blizzard-5jur.onrender.com";
+// const API_URL = "http://127.0.0.1:3000";
+const API_URL = "https://blizzard-5jur.onrender.com";
 
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
