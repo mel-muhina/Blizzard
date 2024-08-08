@@ -23,7 +23,7 @@ function updateAnswer({ game, outcome }) {
 
   console.log(correctAnswerText);
   title.textContent = outcome ? "Correct answer" : "Wrong answer";
-  title.classList.add(outcome ? "title-correct" : "title-wrong");
+  title.id = outcome ? "title-correct" : "title-wrong";
 
   lives.textContent = `Lives remaining: ${game.lives}`;
   correctAnswerEl.textContent = correctAnswerText.answer_text;
