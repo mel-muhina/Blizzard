@@ -26,7 +26,7 @@ describe("Game API endpoints", () => {
       const response = await request(api).get("/");
 
       expect(response.statusCode).toBe(200);
-      expect(response.body.message).toBe("History game");
+      expect(response.body.name).toBe("History game");
       expect(response.body.description).toBe(
         "Learn by being an advisor to the great figures of history"
       );
