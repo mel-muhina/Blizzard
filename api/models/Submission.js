@@ -21,8 +21,9 @@ class Submission {
 
   static async getQuestionsStats() {
     const result = await db.query(
-      `SELECT
+      ` SELECT
       q.question_id,
+      c.character_name,
       q.question_description,
       COALESCE(
         (SUM(CASE WHEN s.outcome = TRUE THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(s.submission_id), 0)),
@@ -32,8 +33,10 @@ class Submission {
       submission s
     JOIN
       question q ON s.question_id = q.question_id
+    JOIN events e ON q.event_id = e.event_id
+    JOIN characters c on e.character_id = c.character_id
     GROUP BY
-      q.question_id, q.question_description`
+      q.question_id, q.question_description,c.character_name`
     );
 
     return result.rows;
