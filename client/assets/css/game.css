@@ -261,7 +261,9 @@ p {
   flex-direction: row;
 }
 
-.lives-heart {
+.lives_heart {
+  width: 2rem;
+  height: 2rem;
   background: url("../images/heart.png");
   background-position: center;
   background-repeat: no-repeat;
